@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Commish</string>
+
+    <string name="page_one_title">Welcome to My Commish, \n your commission companion!</string>
+    <string name="page_one_subtitle">Effortlessly track your earnings \n and boost your income.</string>
+    <string name="page_one_button_label">Go</string>
+
+</resources>
