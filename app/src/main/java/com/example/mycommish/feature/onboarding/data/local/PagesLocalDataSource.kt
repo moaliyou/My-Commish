@@ -7,7 +7,8 @@ object PagesLocalDataSource {
     val pages = listOf(
         Page(
             title = R.string.page_one_title,
-            subtitle = R.string.page_one_subtitle
+            subtitle = R.string.page_one_subtitle,
+            image = R.drawable.money_img_on
         )
     )
 }
