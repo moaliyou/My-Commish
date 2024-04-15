@@ -4,15 +4,19 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mycommish.R
+import com.example.mycommish.feature.onboarding.data.local.PagesLocalDataSource.pages
 import com.example.mycommish.feature.onboarding.domain.model.Page
 import com.example.mycommish.ui.theme.MyCommishTheme
 
@@ -27,9 +31,12 @@ fun OnBoardingPage(
         verticalArrangement = Arrangement.SpaceAround
     ) {
         Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .size(dimensionResource(R.dimen.default_image_size)),
             painter = painterResource(page.image),
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Fit
         )
         Text(text = stringResource(page.title))
         Text(text = stringResource(page.subtitle))
@@ -40,11 +47,7 @@ fun OnBoardingPage(
 @Preview(showBackground = true)
 @Composable
 private fun OnBoardingPagePreview() {
-    val page = Page(
-        title = R.string.page_one_title,
-        subtitle = R.string.page_one_subtitle,
-        image = R.drawable.ic_launcher_foreground
-    )
+    val page = pages[0]
     MyCommishTheme {
         OnBoardingPage(
             modifier = Modifier.fillMaxSize(),
