@@ -11,4 +11,4 @@ Now you can focus on closing deals and <strong><em>My Commish</em></strong> will
 - **Monthly Commission Tracking**: Track and manage your monthly commissions with ease.
 - **Effortless Prize Entry**: Save and record your commission prizes for clear and organized records.
 - **Informative Dashboard**: Gain valuable insights with an intuitive dashboard featuring reports on your commission data.
-- **Focus on Sales**: **My Commish** simplifies commission tracking, allowing you to focus on closing deals and maximizing your earnings.
+- **Focus on Sales**: My Commish simplifies commission tracking, allowing you to focus on closing deals and maximizing your earnings.
