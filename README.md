@@ -1,5 +1,5 @@
 # My Commish App
-## Know Your Worth. The commission app keeps you in control
+### Know Your Worth. The commission app keeps you in control
 <p>
 Spreadsheets got you down?
 I built My Commish, a commission tracker app because I was tired of confusing spreadsheets and unreliable mental math like you. 
