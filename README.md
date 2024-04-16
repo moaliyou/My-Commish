@@ -18,7 +18,7 @@ Contributions make the open-source community such an amazing place to learn, ins
 
 Any contributions you make are greatly appreciated.
 
-If you have suggestions for adding or removing projects, [open an issue](https://github.com/moaliyou/My-Commish/pulls) to discuss it, or directly create a pull request after you edit the [README.md](http://readme.md/) file with the necessary changes.
+If you have suggestions for adding or removing projects, [open an issue](https://github.com/moaliyou/My-Commish/pulls) to discuss it, or directly create a pull request after you edit the [README.md](https://github.com/moaliyou/My-Commish/blob/master/README.md) file with the necessary changes.
 Please make sure you check your spelling and grammar.
 Create individual PR for each suggestion.
 
