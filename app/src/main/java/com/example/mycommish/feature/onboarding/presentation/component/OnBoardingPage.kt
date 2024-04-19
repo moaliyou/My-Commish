@@ -44,12 +44,14 @@ fun OnBoardingPage(
         Text(
             text = stringResource(page.title),
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.primaryContainer
+            color = MaterialTheme.colorScheme.primaryContainer,
+            style = MaterialTheme.typography.titleLarge
         )
         Text(
             text = stringResource(page.subtitle),
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.primaryContainer
+            color = MaterialTheme.colorScheme.primaryContainer,
+            style = MaterialTheme.typography.titleSmall
         )
 
     }
