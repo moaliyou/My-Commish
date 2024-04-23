@@ -1,17 +1,21 @@
 package com.example.mycommish.feature.onboarding.presentation.component
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mycommish.R
 import com.example.mycommish.ui.theme.MyCommishTheme
+import com.example.mycommish.ui.theme.primaryContainerBackground
+import com.example.mycommish.ui.theme.primaryContainerContent
 
 @Composable
 fun PrimaryContainerButton(
@@ -24,8 +28,8 @@ fun PrimaryContainerButton(
         onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = primaryContainerContent,
+            contentColor = primaryContainerBackground
         ),
         shape = shape
     ) {
@@ -33,13 +37,37 @@ fun PrimaryContainerButton(
     }
 }
 
+@Composable
+fun SecondaryButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    contentColor: Color = Color.Unspecified,
+    onClick: () -> Unit
+){
+    TextButton(
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            color = contentColor
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun ActionButtonsPreview() {
     MyCommishTheme {
-        PrimaryContainerButton(
-            text = "Go",
-            onClick = {}
-        )
+        Column {
+            PrimaryContainerButton(
+                text = "Go",
+                onClick = {}
+            )
+            SecondaryButton(
+                text = "Back",
+                onClick = {}
+            )
+        }
     }
 }
