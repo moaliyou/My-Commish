@@ -1,5 +1,6 @@
 package com.example.mycommish.core.util
 
 object AppConstants {
-    const val USER_SETTINGS = "userSettings"
+    const val APP_ENTRY = "app_entry"
+    const val USER_SETTINGS = "user_settings"
 }
