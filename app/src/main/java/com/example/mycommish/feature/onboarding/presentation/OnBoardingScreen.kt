@@ -34,8 +34,8 @@ fun OnBoardingScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(dimensionResource(R.dimen.extra_medium_padding))
             .background(primaryContainerBackground)
+            .padding(dimensionResource(R.dimen.extra_medium_padding))
     ) {
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
