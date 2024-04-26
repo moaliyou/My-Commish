@@ -1,4 +1,4 @@
-package com.example.mycommish.ui.theme
+package com.example.mycommish.core.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -31,7 +31,6 @@ val md_theme_light_outline = Color(0xFF757780)
 val md_theme_light_inverseOnSurface = Color(0xFFECF0FF)
 val md_theme_light_inverseSurface = Color(0xFF003062)
 val md_theme_light_inversePrimary = Color(0xFFB1C6FF)
-val md_theme_light_shadow = Color(0xFF000000)
 val md_theme_light_surfaceTint = Color(0xFF285AB9)
 val md_theme_light_outlineVariant = Color(0xFFC5C6D0)
 val md_theme_light_scrim = Color(0xFF000000)
@@ -62,9 +61,6 @@ val md_theme_dark_outline = Color(0xFF8F9099)
 val md_theme_dark_inverseOnSurface = Color(0xFF001B3D)
 val md_theme_dark_inverseSurface = Color(0xFFD6E3FF)
 val md_theme_dark_inversePrimary = Color(0xFF285AB9)
-val md_theme_dark_shadow = Color(0xFF000000)
 val md_theme_dark_surfaceTint = Color(0xFFB1C6FF)
 val md_theme_dark_outlineVariant = Color(0xFF44464F)
 val md_theme_dark_scrim = Color(0xFF000000)
-
-val seed = Color(0xFF0747A6)

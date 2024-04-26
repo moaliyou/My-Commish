@@ -1,4 +1,4 @@
-package com.example.mycommish
+package com.example.mycommish.core.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.mycommish.feature.onboarding.presentation.OnBoardingScreen
-import com.example.mycommish.ui.theme.MyCommishTheme
+import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

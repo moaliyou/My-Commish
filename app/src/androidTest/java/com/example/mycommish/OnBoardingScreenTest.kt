@@ -4,7 +4,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.example.mycommish.feature.onboarding.presentation.OnBoardingScreen
-import com.example.mycommish.ui.theme.MyCommishTheme
+import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import org.junit.Rule
 import org.junit.Test
 

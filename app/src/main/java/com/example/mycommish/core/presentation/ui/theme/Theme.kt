@@ -1,4 +1,4 @@
-package com.example.mycommish.ui.theme
+package com.example.mycommish.core.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

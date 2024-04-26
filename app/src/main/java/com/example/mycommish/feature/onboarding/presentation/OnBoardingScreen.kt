@@ -24,8 +24,8 @@ import com.example.mycommish.feature.onboarding.data.local.PagesLocalDataSource.
 import com.example.mycommish.feature.onboarding.presentation.component.OnBoardingPage
 import com.example.mycommish.feature.onboarding.presentation.component.PrimaryContainerButton
 import com.example.mycommish.feature.onboarding.presentation.component.SecondaryButton
-import com.example.mycommish.ui.theme.primaryContainerBackground
-import com.example.mycommish.ui.theme.primaryContainerContent
+import com.example.mycommish.core.presentation.ui.theme.primaryContainerBackground
+import com.example.mycommish.core.presentation.ui.theme.primaryContainerContent
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

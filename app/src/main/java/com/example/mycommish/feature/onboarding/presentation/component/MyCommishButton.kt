@@ -13,9 +13,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mycommish.R
-import com.example.mycommish.ui.theme.MyCommishTheme
-import com.example.mycommish.ui.theme.primaryContainerBackground
-import com.example.mycommish.ui.theme.primaryContainerContent
+import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
+import com.example.mycommish.core.presentation.ui.theme.primaryContainerBackground
+import com.example.mycommish.core.presentation.ui.theme.primaryContainerContent
 
 @Composable
 fun PrimaryContainerButton(
