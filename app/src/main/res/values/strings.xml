@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">My Commish</string>
 
-    <string name="page_one_title">Welcome to My Commish, \n your commission companion!</string>
-    <string name="page_one_subtitle">Effortlessly track your earnings \n and boost your income.</string>
+    <string name="page_one_title">Welcome to My Commish,\nyour commission companion!</string>
+    <string name="page_one_subtitle">Effortlessly track your earnings\nand boost your income.</string>
     <string name="page_one_button_label">Go</string>
+
+    <string name="page_two_title">Struggling with spreadsheets\nand messy calculations?</string>
+    <string name="page_two_subtitle">We get it.\n Traditional commission tracking is a pain.\nMy Commish simplifies the process,\nsaving you time and frustration.</string>
+
+    <string name="page_three_title">Time to take control of\nyour commissions!</string>
+    <string name="page_three_subtitle">My Commish is ready to simplify\nyour workday and boost your earnings.</string>
+    <string name="page_three_button_label">Start</string>
+
+    <string name="next_button_label">Next</string>
+    <string name="back_button_label">Back</string>
 
 </resources>
