@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.datastore)
     implementation(libs.hilt.library)
+    implementation(libs.androidx.hilt)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
