@@ -5,7 +5,7 @@ import com.example.mycommish.feature.onboarding.domain.repository.UserManagerRep
 class SaveAppEntryUseCase(
     private val userManagerRepository: UserManagerRepository
 ) {
-    suspend fun invoke() {
+    suspend operator fun invoke() {
         userManagerRepository.saveAppEntry()
     }
 }
