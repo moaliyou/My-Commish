@@ -3,6 +3,8 @@
     <dimen name="default_image_size">260dp</dimen>
     <dimen name="small_padding">4dp</dimen>
     <dimen name="medium_padding">8dp</dimen>
+    <dimen name="navigation_medium_rounded">12dp</dimen>
+    <dimen name="navigation_extra_medium_rounded">12dp</dimen>
     <dimen name="extra_medium_padding">16dp</dimen>
     <dimen name="large_padding">32dp</dimen>
     <dimen name="extra_large_padding">64dp</dimen>
