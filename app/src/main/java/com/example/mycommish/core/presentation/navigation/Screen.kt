@@ -1,4 +1,4 @@
-package com.example.mycommish.feature.home.presentation.navigation
+package com.example.mycommish.core.presentation.navigation
 
 import com.example.mycommish.R
 

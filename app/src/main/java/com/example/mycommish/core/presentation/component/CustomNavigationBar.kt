@@ -1,4 +1,4 @@
-package com.example.mycommish.feature.home.presentation.component
+package com.example.mycommish.core.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,7 +28,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mycommish.R
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
-import com.example.mycommish.feature.home.presentation.navigation.Screen
+import com.example.mycommish.core.presentation.navigation.Screen
 
 @Composable
 fun CustomNavigationBar(
