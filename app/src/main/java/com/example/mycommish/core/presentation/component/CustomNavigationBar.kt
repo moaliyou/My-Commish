@@ -28,12 +28,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mycommish.R
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
-import com.example.mycommish.core.presentation.navigation.Screen
+import com.example.mycommish.core.presentation.navigation.Route
 
 @Composable
 fun CustomNavigationBar(
     modifier: Modifier = Modifier,
-    navigationItems: List<Screen>,
+    navigationItems: List<Route>,
     destination: NavDestination?,
     onSelectedNavigationItem: (String) -> Unit,
 ) {
@@ -64,7 +64,7 @@ fun CustomNavigationBar(
 
 @Composable
 private fun CustomNavigationBarItem(
-    navigationItem: Screen,
+    navigationItem: Route,
     isSelected: Boolean = false,
     onItemClickChange: () -> Unit
 ) {
@@ -94,7 +94,7 @@ private fun CustomNavigationBarItem(
 @Composable
 private fun CustomNavigationBarPreview() {
     MyCommishTheme {
-        val navigationItems = Screen.getNavigationItems()
+        val navigationItems = Route.getNavigationItems()
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
