@@ -82,7 +82,9 @@ fun OnBoardingScreen(
                     contentColor = primaryContainerContent,
                     onClick = {
                         scope.launch {
-                            pagerState.animateScrollToPage(page = pagerState.currentPage.minus(1))
+                            pagerState.animateScrollToPage(
+                                page = pagerState.currentPage.minus(1)
+                            )
                         }
                     }
                 )
