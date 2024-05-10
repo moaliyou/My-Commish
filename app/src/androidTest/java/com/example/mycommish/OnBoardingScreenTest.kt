@@ -17,7 +17,9 @@ class OnBoardingScreenTest {
         // Start the app
         composeTestRule.setContent {
             MyCommishTheme {
-                OnBoardingScreen()
+                OnBoardingScreen(
+                    onGetStarted = {}
+                )
             }
         }
 
