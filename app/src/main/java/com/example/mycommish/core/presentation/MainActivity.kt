@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.mycommish.core.presentation.myapp.MyCommishApp
+import com.example.mycommish.core.presentation.screen.MyCommishApp
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import dagger.hilt.android.AndroidEntryPoint
 

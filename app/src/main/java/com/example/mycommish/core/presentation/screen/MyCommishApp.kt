@@ -1,4 +1,4 @@
-package com.example.mycommish.core.presentation.myapp
+package com.example.mycommish.core.presentation.screen
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel

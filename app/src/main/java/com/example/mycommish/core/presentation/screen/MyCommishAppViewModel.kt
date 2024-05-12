@@ -1,4 +1,4 @@
-package com.example.mycommish.core.presentation.myapp
+package com.example.mycommish.core.presentation.screen
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
