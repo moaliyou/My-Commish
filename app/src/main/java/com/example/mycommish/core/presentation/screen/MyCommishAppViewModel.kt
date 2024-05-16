@@ -15,15 +15,15 @@ import javax.inject.Inject
 class MyCommishAppViewModel @Inject constructor(
     appEntryUseCase: AppEntryUseCase
 ): ViewModel() {
-    private val _startDestination = mutableStateOf(Route.AppStart.route)
+    private val _startDestination = mutableStateOf(Route.OnBoarding.route)
     val startDestination: State<String> = _startDestination
 
     init {
         appEntryUseCase.readAppEntry().onEach { canStartPrizeScreen ->
             if (canStartPrizeScreen) {
-                _startDestination.value = Route.Prize.route
+                _startDestination.value = Route.Home.route
             } else {
-                _startDestination.value = Route.AppStart.route
+                _startDestination.value = Route.OnBoarding.route
             }
         }.launchIn(viewModelScope)
     }
