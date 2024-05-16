@@ -27,8 +27,9 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mycommish.R
-import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import com.example.mycommish.core.presentation.navigation.Route
+import com.example.mycommish.core.presentation.navigation.Route.Companion.navigationItems
+import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 
 @Composable
 fun CustomNavigationBar(
@@ -94,7 +95,7 @@ private fun CustomNavigationBarItem(
 @Composable
 private fun CustomNavigationBarPreview() {
     MyCommishTheme {
-        val navigationItems = Route.getNavigationItems()
+        val navigationItems = navigationItems
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
