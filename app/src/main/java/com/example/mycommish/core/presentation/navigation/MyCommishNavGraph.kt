@@ -20,7 +20,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mycommish.R
 import com.example.mycommish.core.presentation.component.CustomNavigationBar
 import com.example.mycommish.core.presentation.navigation.Route.Companion.navigationItems
-import com.example.mycommish.feature.onboarding.presentation.navigation.navigateToHome
 import com.example.mycommish.feature.onboarding.presentation.navigation.onBoardingScreen
 
 @Composable
@@ -42,20 +41,18 @@ fun MyCommishNavHost(
                 )
             }
         },
-        modifier = Modifier.padding(dimensionResource(R.dimen.extra_medium_padding))
     ) { innerPaddingValue ->
         NavHost(
             navController = navController,
             startDestination = startDestination,
             modifier = modifier.padding(innerPaddingValue)
         ) {
-            onBoardingScreen(
-                onNavigateToHome = {
-                    if (startDestination == Route.Home.route) {
-                        navController.navigateToHome()
-                    }
-                }
-            )
+            navigation(
+                route = Route.AppStart.route,
+                startDestination = Route.AppStart.OnBoarding.route
+            ) {
+                onBoardingScreen()
+            }
 
             navigation(
                 route = Route.Home.route,
