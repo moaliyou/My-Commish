@@ -7,9 +7,7 @@ sealed class Route(
     val activeIcon: Int = 0,
     val inactiveIcon: Int = 0
 ) {
-    data object Home : Route(
-        route = "home"
-    ) {
+    data object Home : Route(route = "home") {
         data object Dashboard : Route(
             route = "dashboard",
             activeIcon = R.drawable.dashboard_active_icon,
@@ -29,9 +27,11 @@ sealed class Route(
         )
     }
 
-    data object OnBoarding : Route(
-        route = "onboarding"
-    )
+    data object AppStart : Route(route = "app_start") {
+        data object OnBoarding : Route(
+            route = "onboarding"
+        )
+    }
 
     companion object {
         val navigationItems = listOf(
