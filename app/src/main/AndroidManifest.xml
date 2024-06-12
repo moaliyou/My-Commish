@@ -16,7 +16,7 @@
         <activity
             android:name=".core.presentation.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyCommish">
+            android:theme="@style/Theme.MyCommish.MyCommishSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
