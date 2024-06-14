@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.hilt.library)
     implementation(libs.androidx.hilt)
+    implementation(libs.androidx.ui.text.google.fonts)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
