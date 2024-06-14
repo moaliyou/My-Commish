@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.example.mycommish.feature.onboarding.presentation.component
 
 import androidx.annotation.StringRes
@@ -7,12 +9,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -32,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.mycommish.R
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import com.example.mycommish.feature.onboarding.data.local.PagesLocalDataSource.pages
@@ -42,7 +48,8 @@ fun OnBoardingPage(
     modifier: Modifier = Modifier,
     page: Page,
     onPageChange: () -> Unit,
-    buttonState: State<String>
+    buttonState: State<String>,
+    pagerState: PagerState
 ) {
 
     Box(
@@ -87,11 +94,39 @@ fun OnBoardingPage(
                     .padding(dimensionResource(R.dimen.large_padding)),
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.medium_padding))
             ) {
+                PageIndicator(pagerState)
                 Spacer(modifier = Modifier.fillMaxHeight(0.2f))
                 ContentSection(title = page.title, subtitle = page.subtitle)
                 Spacer(modifier = Modifier.fillMaxHeight(0.3f))
                 ActionButton(buttonState, onPageChange)
             }
+        }
+    }
+}
+
+@Composable
+private fun PageIndicator(pagerState: PagerState) {
+    Row(
+        Modifier
+            .wrapContentHeight()
+            .fillMaxWidth()
+            .padding(top = dimensionResource(R.dimen.medium_padding)),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        repeat(pagerState.pageCount) { iteration ->
+            val color =
+                if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+
+            Box(
+                modifier = Modifier
+                    .padding(2.dp)
+                    .clip(RoundedCornerShape(dimensionResource(R.dimen.medium_padding)))
+                    .background(color)
+                    .size(
+                        width = dimensionResource(R.dimen.extra_large_padding),
+                        height = dimensionResource(R.dimen.medium_padding)
+                    )
+            )
         }
     }
 }
@@ -141,7 +176,6 @@ private fun ActionButton(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun OnBoardingPagePreview() {
@@ -166,7 +200,8 @@ private fun OnBoardingPagePreview() {
                 .padding(dimensionResource(R.dimen.extra_medium_padding)),
             page = page,
             onPageChange = { },
-            buttonState = buttonState
+            buttonState = buttonState,
+            pagerState = pagerState
         )
     }
 }

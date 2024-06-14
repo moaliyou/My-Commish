@@ -46,7 +46,8 @@ fun OnBoardingScreen(
                     .background(MaterialTheme.colorScheme.primary),
                 page = pages[index],
                 onPageChange = { },
-                buttonState = buttonState
+                buttonState = buttonState,
+                pagerState = pagerState
             )
         }
     }
