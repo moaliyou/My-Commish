@@ -99,10 +99,21 @@ fun OnBoardingPage(
                     pageSize = pageSize,
                     selectedPagePosition = selectedPagePosition,
                 )
+                Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+                ContentSection(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth(),
+                    title = page.title,
+                    subtitle = page.subtitle
+                )
                 Spacer(modifier = Modifier.fillMaxHeight(0.2f))
-                ContentSection(title = page.title, subtitle = page.subtitle)
-                Spacer(modifier = Modifier.fillMaxHeight(0.3f))
-                ActionButton(buttonState, onPageChange)
+                ActionButton(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    buttonState = buttonState,
+                    onPageChange = onPageChange
+                )
             }
         }
     }
@@ -110,31 +121,39 @@ fun OnBoardingPage(
 
 @Composable
 private fun ContentSection(
+    modifier: Modifier = Modifier,
     @StringRes title: Int,
-    @StringRes subtitle: Int,
+    @StringRes subtitle: Int
 ) {
-    Text(
-        text = stringResource(title),
-        textAlign = TextAlign.Left,
-        color = MaterialTheme.colorScheme.onSecondaryContainer,
-        style = MaterialTheme.typography.titleLarge
-    )
-    Text(
-        text = stringResource(subtitle),
-        textAlign = TextAlign.Left,
-        color = MaterialTheme.colorScheme.onSecondaryContainer,
-        style = MaterialTheme.typography.titleSmall
-    )
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.medium_padding))
+    ) {
+        Text(
+            text = stringResource(title),
+            textAlign = TextAlign.Left,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text(
+            text = stringResource(subtitle),
+            textAlign = TextAlign.Left,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            style = MaterialTheme.typography.titleSmall
+        )
+    }
 }
 
 @Composable
 private fun ActionButton(
+    modifier: Modifier = Modifier,
     buttonState: State<String>,
     onPageChange: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         if (buttonState.value.isNotEmpty()) {
             PrimaryButton(
