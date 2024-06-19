@@ -44,7 +44,13 @@ fun OnBoardingScreen(
                 page = pages[index],
                 onPageChange = {
                     scope.launch {
-                        pagerState.currentPage + 1
+                        if (pagerState.currentPage == 2) {
+                            onGetStarted(OnBoardingUiEvent.SaveAppEntry)
+                        } else {
+                            pagerState.animateScrollToPage(
+                                page = pagerState.currentPage + 1
+                            )
+                        }
                     }
                 },
                 buttonState = buttonState,
