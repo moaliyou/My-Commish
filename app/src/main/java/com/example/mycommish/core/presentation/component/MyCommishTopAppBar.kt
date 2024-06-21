@@ -25,7 +25,7 @@ fun MyCommishTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior? = TopAppBarDefaults.pinnedScrollBehavior(),
     title: String,
     actionIcon: Int,
-    onIconClick: () -> Unit,
+    onActionIconClick: () -> Unit,
 
     ) {
     CenterAlignedTopAppBar(
@@ -41,7 +41,7 @@ fun MyCommishTopAppBar(
             )
         },
         actions = {
-            IconButton(onClick = onIconClick) {
+            IconButton(onClick = onActionIconClick) {
                 Icon(
                     imageVector = ImageVector.vectorResource(actionIcon),
                     contentDescription = title,
@@ -61,7 +61,7 @@ private fun MyCommishTopAppBarPreview() {
         MyCommishTopAppBar(
             title = "My Commish Top App Bar",
             actionIcon = R.drawable.track_earnings_active_icon,
-            onIconClick = {}
+            onActionIconClick = {}
         )
     }
 }
