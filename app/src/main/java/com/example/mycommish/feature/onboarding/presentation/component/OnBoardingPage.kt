@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.example.mycommish.feature.onboarding.presentation.component
 
 import androidx.annotation.StringRes
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -39,10 +42,11 @@ import com.example.mycommish.feature.onboarding.domain.model.Page
 
 @Composable
 fun OnBoardingPage(
-    modifier: Modifier = Modifier,
     page: Page,
     onPageChange: () -> Unit,
-    buttonState: State<String>
+    buttonState: State<String>,
+    pageSize: Int,
+    selectedPagePosition: Int
 ) {
 
     Box(
@@ -87,10 +91,29 @@ fun OnBoardingPage(
                     .padding(dimensionResource(R.dimen.large_padding)),
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.medium_padding))
             ) {
+                PageIndicator(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .padding(top = dimensionResource(R.dimen.medium_padding)),
+                    pageSize = pageSize,
+                    selectedPagePosition = selectedPagePosition,
+                )
+                Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+                ContentSection(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth(),
+                    title = page.title,
+                    subtitle = page.subtitle
+                )
                 Spacer(modifier = Modifier.fillMaxHeight(0.2f))
-                ContentSection(title = page.title, subtitle = page.subtitle)
-                Spacer(modifier = Modifier.fillMaxHeight(0.3f))
-                ActionButton(buttonState, onPageChange)
+                ActionButton(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    buttonState = buttonState,
+                    onPageChange = onPageChange
+                )
             }
         }
     }
@@ -98,31 +121,39 @@ fun OnBoardingPage(
 
 @Composable
 private fun ContentSection(
+    modifier: Modifier = Modifier,
     @StringRes title: Int,
-    @StringRes subtitle: Int,
+    @StringRes subtitle: Int
 ) {
-    Text(
-        text = stringResource(title),
-        textAlign = TextAlign.Left,
-        color = MaterialTheme.colorScheme.onSecondaryContainer,
-        style = MaterialTheme.typography.titleLarge
-    )
-    Text(
-        text = stringResource(subtitle),
-        textAlign = TextAlign.Left,
-        color = MaterialTheme.colorScheme.onSecondaryContainer,
-        style = MaterialTheme.typography.titleSmall
-    )
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.medium_padding))
+    ) {
+        Text(
+            text = stringResource(title),
+            textAlign = TextAlign.Left,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text(
+            text = stringResource(subtitle),
+            textAlign = TextAlign.Left,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            style = MaterialTheme.typography.titleSmall
+        )
+    }
 }
 
 @Composable
 private fun ActionButton(
+    modifier: Modifier = Modifier,
     buttonState: State<String>,
     onPageChange: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         if (buttonState.value.isNotEmpty()) {
             PrimaryButton(
@@ -141,7 +172,6 @@ private fun ActionButton(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun OnBoardingPagePreview() {
@@ -160,13 +190,11 @@ private fun OnBoardingPagePreview() {
 
     MyCommishTheme {
         OnBoardingPage(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(dimensionResource(R.dimen.extra_medium_padding)),
             page = page,
             onPageChange = { },
-            buttonState = buttonState
+            buttonState = buttonState,
+            pageSize = pagerState.pageCount,
+            selectedPagePosition = pagerState.currentPage
         )
     }
 }
