@@ -42,7 +42,7 @@ fun CustomNavigationBar(
         modifier = modifier
             .windowInsetsPadding(WindowInsets.navigationBars)
             .clip(RoundedCornerShape(dimensionResource(R.dimen.navigation_medium_rounded)))
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(MaterialTheme.colorScheme.surfaceContainer)
             .padding(dimensionResource(R.dimen.extra_medium_padding))
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -85,7 +85,7 @@ private fun CustomNavigationBarItem(
                     else navigationItem.inactiveIcon
                 ),
                 contentDescription = navigationItem.route,
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }

@@ -37,7 +37,9 @@ fun MyCommishNavHost(
                 CustomNavigationBar(
                     navigationItems = navigationItems,
                     destination = currentDestination,
-                    onSelectedNavigationItem = { route -> navController.navigate(route) }
+                    onSelectedNavigationItem = { route -> navController.navigate(route) },
+                    modifier = Modifier
+                        .padding(dimensionResource(R.dimen.extra_medium_padding))
                 )
             }
         },
