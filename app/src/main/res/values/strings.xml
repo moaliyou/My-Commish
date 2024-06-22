@@ -14,5 +14,7 @@
 
     <string name="next_button_label">Next</string>
     <string name="back_button_label">Back</string>
+    <string name="prize_label">Prize</string>
+    <string name="no_data_description">No data in the %s.\nTap + to add.</string>
 
 </resources>
