@@ -92,7 +92,7 @@ private fun PrizeInputForm(
 
 @Preview(showBackground = true)
 @Composable
-fun PrizeEntryScreenPreview() {
+private fun PrizeEntryScreenPreview() {
     MyCommishTheme {
         PrizeEntryScreen(
             onNavigateUp = {}
