@@ -16,5 +16,9 @@
     <string name="back_button_label">Back</string>
     <string name="prize_label">Prize</string>
     <string name="no_data_description">No data in the %s.\nTap + to add.</string>
+    <string name="prize_description_label">Description (option)</string>
+    <string name="prize_value_label">Prize value</string>
+    <string name="prize_name_label">Prize name</string>
+    <string name="prize_entry_label">Prize Entry</string>
 
 </resources>
