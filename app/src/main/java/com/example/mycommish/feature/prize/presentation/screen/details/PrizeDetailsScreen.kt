@@ -24,7 +24,9 @@ import com.example.mycommish.feature.prize.domain.model.Prize
 import com.example.mycommish.feature.prize.presentation.component.PrizeCard
 
 @Composable
-fun PrizeDetailsScreen() {
+fun PrizeDetailsScreen(
+    onActionClick: () -> Unit
+) {
     val prizeDetailsUiState = PrizeDetailsUiState()
 
     Scaffold(
@@ -32,7 +34,7 @@ fun PrizeDetailsScreen() {
             MyCommishTopAppBar(
                 title = stringResource(R.string.prize_label),
                 actionIcon = R.drawable.ic_add_prize,
-                onActionClick = {}
+                onActionClick = onActionClick
             )
         }
     ) { innerPadding ->
@@ -102,6 +104,8 @@ private fun PrizeList(
 @Composable
 private fun PrizeDetailsScreenPreview() {
     MyCommishTheme {
-        PrizeDetailsScreen()
+        PrizeDetailsScreen(
+            onActionClick = {}
+        )
     }
 }
