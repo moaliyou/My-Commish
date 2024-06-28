@@ -28,7 +28,10 @@ import com.example.mycommish.feature.prize.presentation.navigation.prizeGraph
 @Composable
 fun MyCommishNavHost(
     modifier: Modifier = Modifier,
-    startDestination: String
+    startDestination: String,
+    canShowNavigationBar: Boolean,
+    onShowNavigationBar: () -> Unit,
+    onHideNavigationBar: () -> Unit
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -36,7 +39,7 @@ fun MyCommishNavHost(
 
     Scaffold(
         bottomBar = {
-            if (startDestination == Route.Home.route) {
+            if (startDestination == Route.Home.route && canShowNavigationBar) {
                 CustomNavigationBar(
                     navigationItems = navigationItems,
                     destination = currentDestination,
@@ -84,8 +87,14 @@ fun MyCommishNavHost(
                 }
 
                 prizeGraph(
-                    onActionClick = { navController.navigateToPrizeEntry() },
-                    onNavigateUp = { navController.navigateUp() }
+                    onActionClick = {
+                        navController.navigateToPrizeEntry()
+                        onHideNavigationBar()
+                    },
+                    onNavigateUp = {
+                        navController.navigateUp()
+                        onShowNavigationBar()
+                    }
                 )
 
                 composable(route = Route.Home.TrackEarnings.route) {
