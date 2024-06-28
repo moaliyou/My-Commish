@@ -5,4 +5,6 @@
     <string name="prize_description_label">Description (option)</string>
     <string name="prize_value_label">Prize value</string>
     <string name="prize_entry_label">Prize Entry</string>
+    <string name="next_button_label">next</string>
+    <string name="get_started_button_label">Get Started</string>
 </resources>
