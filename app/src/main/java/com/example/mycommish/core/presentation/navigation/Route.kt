@@ -1,11 +1,12 @@
 package com.example.mycommish.core.presentation.navigation
 
+import androidx.annotation.DrawableRes
 import com.example.mycommish.R
 
 sealed class Route(
     val route: String,
-    val activeIcon: Int = 0,
-    val inactiveIcon: Int = 0
+    @DrawableRes val activeIcon: Int = 0,
+    @DrawableRes val inactiveIcon: Int = 0
 ) {
     data object Home : Route(route = "home") {
         data object Dashboard : Route(
@@ -18,7 +19,11 @@ sealed class Route(
             route = "prize",
             activeIcon = R.drawable.prize_active_icon,
             inactiveIcon = R.drawable.prize_inactive_icon
-        )
+        ) {
+            data object PrizeDetails : Route(route = "prize_details")
+
+            data object PrizeEntry : Route(route = "prize_entry")
+        }
 
         data object TrackEarnings : Route(
             route = "track_earnings",

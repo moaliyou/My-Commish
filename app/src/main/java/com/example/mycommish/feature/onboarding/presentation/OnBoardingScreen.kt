@@ -12,6 +12,8 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.example.mycommish.R
 import com.example.mycommish.feature.onboarding.data.local.PagesLocalDataSource.pages
 import com.example.mycommish.feature.onboarding.presentation.component.OnBoardingPage
 import kotlinx.coroutines.launch
@@ -21,6 +23,8 @@ import kotlinx.coroutines.launch
 fun OnBoardingScreen(
     onGetStarted: (OnBoardingUiEvent) -> Unit
 ) {
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +36,7 @@ fun OnBoardingScreen(
         val buttonState = remember {
             derivedStateOf {
                 when (pagerState.currentPage) {
-                    2 -> "Get Started"
+                    2 -> context.getString(R.string.get_started_button_label)
                     else -> ""
                 }
             }

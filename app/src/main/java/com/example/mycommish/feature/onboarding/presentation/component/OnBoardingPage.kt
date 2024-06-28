@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -164,9 +165,10 @@ private fun ActionButton(
             PrimaryIconButton(
                 onClick = onPageChange,
                 icon = ImageVector.vectorResource(R.drawable.ic_foward_arrow),
-                contentDescription = "next",
+                contentDescription = stringResource(R.string.next_button_label),
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.icon_button_size))
+                    .testTag(stringResource(R.string.next_button_label))
             )
         }
     }

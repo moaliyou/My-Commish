@@ -23,6 +23,9 @@ class MyCommishAppViewModel @Inject constructor(
     private val _isLoading: MutableState<Boolean> = mutableStateOf(true)
     val isLoading: State<Boolean> = _isLoading
 
+    private val _canShowNavigationBar: MutableState<Boolean> = mutableStateOf(true)
+    val canShowNavigationBar: State<Boolean> = _canShowNavigationBar
+
     init {
         appEntryUseCase.readAppEntry().onEach { canStartHomeApp ->
             if (canStartHomeApp) {
@@ -33,6 +36,14 @@ class MyCommishAppViewModel @Inject constructor(
             delay(300L)
             _isLoading.value = false
         }.launchIn(viewModelScope)
+    }
+
+    fun showNavigationBar() {
+        _canShowNavigationBar.value = true
+    }
+
+    fun hideNavigationBar() {
+        _canShowNavigationBar.value = false
     }
 
 }

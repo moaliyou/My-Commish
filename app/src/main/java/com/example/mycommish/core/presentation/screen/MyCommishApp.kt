@@ -11,6 +11,9 @@ fun MyCommishApp() {
     val startDestination by myCommishAppViewModel.startDestination
 
     MyCommishNavHost(
-        startDestination = startDestination
+        startDestination = startDestination,
+        onShowNavigationBar = myCommishAppViewModel::showNavigationBar,
+        onHideNavigationBar = myCommishAppViewModel::hideNavigationBar,
+        canShowNavigationBar = myCommishAppViewModel.canShowNavigationBar.value
     )
 }
