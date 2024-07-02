@@ -61,7 +61,7 @@ fun MyCommishNavHost(
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier = modifier.padding(innerPaddingValue)
+            modifier = modifier
         ) {
             navigation(
                 route = Route.AppStart.route,
@@ -78,7 +78,7 @@ fun MyCommishNavHost(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(dimensionResource(R.dimen.extra_medium_padding)),
+                            .padding(innerPaddingValue),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
