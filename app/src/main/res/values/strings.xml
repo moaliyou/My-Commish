@@ -18,5 +18,6 @@
     <string name="prize_entry_label">Prize Entry</string>
     <string name="next_button_label">next</string>
     <string name="get_started_button_label">Get Started</string>
+    <string name="save_button_label">save button</string>
 
 </resources>
