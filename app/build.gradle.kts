@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.realm.kotlin)
 }
 
 android {
@@ -66,6 +67,8 @@ dependencies {
     implementation(libs.hilt.library)
     implementation(libs.androidx.hilt)
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.realm.kotlin)
+    implementation(libs.kotlinx.coroutines.core)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
