@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prize_label">Prize</string>
+    <string name="no_data_description">No data in the %s.\nTap + to add.</string>
+    <string name="prize_description_label">Description (option)</string>
+    <string name="prize_value_label">Prize value</string>
+    <string name="prize_entry_label">Prize Entry</string>
+    <string name="next_button_label">next</string>
+    <string name="get_started_button_label">Get Started</string>
+    <string name="save_button_label">save button</string>
+</resources>

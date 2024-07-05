@@ -4,6 +4,8 @@ import com.example.mycommish.feature.onboarding.domain.repository.UserManagerRep
 import com.example.mycommish.feature.onboarding.domain.use_case.AppEntryUseCase
 import com.example.mycommish.feature.onboarding.domain.use_case.ReadAppEntryUseCase
 import com.example.mycommish.feature.onboarding.domain.use_case.SaveAppEntryUseCase
+import com.example.mycommish.feature.prize.domain.usecase.PrizeEntryValidatorUseCase
+import com.example.mycommish.feature.prize.domain.usecase.PrizeUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +23,12 @@ object UseCaseModule {
     ) = AppEntryUseCase(
         readAppEntry = ReadAppEntryUseCase(userManagerRepository),
         saveAppEntry = SaveAppEntryUseCase(userManagerRepository)
+    )
+
+    @Provides
+    @Singleton
+    fun providePrizeUseCases() = PrizeUseCases(
+        prizeEntryValidatorUseCase = PrizeEntryValidatorUseCase()
     )
 
 }
