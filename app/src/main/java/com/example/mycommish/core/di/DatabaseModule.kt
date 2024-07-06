@@ -1,6 +1,6 @@
 package com.example.mycommish.core.di
 
-import com.example.mycommish.feature.prize.data.local.datasource.Prize
+import com.example.mycommish.feature.prize.data.local.datasource.PrizeObject
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ object DatabaseModule {
     @Singleton
     fun provideRealm(): Realm {
         val config = RealmConfiguration.create(
-            schema = setOf(Prize::class)
+            schema = setOf(PrizeObject::class)
         )
         return Realm.open(config)
     }
