@@ -38,6 +38,7 @@ fun PrizeEntryScreen(
     viewModel: PrizeEntryViewModel = hiltViewModel()
 ) {
     val prizeUiState = viewModel.prizeUiState
+
     Scaffold(
         topBar = {
             MyCommishTopAppBar(
@@ -50,7 +51,9 @@ fun PrizeEntryScreen(
         floatingActionButton = {
             if (prizeUiState.isEntryValid) {
                 MyCommishFloatingActionButton(
-                    onClick = {}
+                    onClick = {
+                        viewModel.savePrize()
+                    }
                 )
             }
         },
@@ -99,7 +102,10 @@ private fun PrizeInputForm(
             text = prize.value,
             onValueChange = { newPrizeValue -> onValueChange(prize.copy(value = newPrizeValue)) },
             label = { Text(text = stringResource(R.string.prize_value_label)) },
-            keyboardOption = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Done),
+            keyboardOption = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal,
+                imeAction = ImeAction.Done
+            ),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
         )
         MyCommishFilledTextField(
