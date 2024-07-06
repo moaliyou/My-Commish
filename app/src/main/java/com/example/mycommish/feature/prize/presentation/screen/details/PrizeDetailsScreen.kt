@@ -12,10 +12,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mycommish.R
 import com.example.mycommish.core.presentation.component.MyCommishTopAppBar
 import com.example.mycommish.core.presentation.component.NoDataIndicator
@@ -25,9 +28,10 @@ import com.example.mycommish.feature.prize.presentation.component.PrizeCard
 
 @Composable
 fun PrizeDetailsScreen(
-    onActionClick: () -> Unit
+    onActionClick: () -> Unit,
+    viewModel: PrizeDetailsViewModel = hiltViewModel()
 ) {
-    val prizeDetailsUiState = PrizeDetailsUiState()
+    val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -81,7 +85,7 @@ private fun PrizeList(
         modifier = modifier,
         contentPadding = contentPadding
     ) {
-        items(items = prizes, key = { it.id }) { prize ->
+        items(items = prizes) { prize ->
             PrizeCard(
                 prizeName = prize.name,
                 prizeValue = prize.value,
