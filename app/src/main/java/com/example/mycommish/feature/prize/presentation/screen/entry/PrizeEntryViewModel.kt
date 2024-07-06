@@ -4,10 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.mycommish.feature.prize.domain.model.Prize
 import com.example.mycommish.feature.prize.domain.usecase.PrizeUseCases
 import com.example.mycommish.feature.prize.presentation.screen.PrizeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,6 +26,12 @@ class PrizeEntryViewModel @Inject constructor(
             prize = prize,
             isEntryValid = prizeUseCases.prizeEntryValidatorUseCase(prize)
         )
+    }
+
+    fun savePrize() {
+        viewModelScope.launch(Dispatchers.IO) {
+            prizeUseCases.addPrizeUseCase(prizeUiState.prize)
+        }
     }
 
 }
