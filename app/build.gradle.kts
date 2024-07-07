@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.realm.kotlin)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.collections.immutable)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)

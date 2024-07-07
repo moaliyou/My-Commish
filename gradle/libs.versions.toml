@@ -14,7 +14,8 @@ hiltNavigationCompose = "1.2.0"
 splashscreen = "1.0.1"
 uiTextGoogleFonts = "1.6.8"
 realm = "1.16.0"
-kotlinxCoroutinesCore = "1.7.3"
+kotlinxCoroutinesCore = "1.8.1"
+kotlinxCollectionsImmutable = "0.3.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +40,7 @@ androidx-hilt = { group = "androidx.hilt", name = "hilt-navigation-compose", ver
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 realm-kotlin = { group = "io.realm.kotlin", name = "library-base", version.ref = "realm" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
