@@ -25,6 +25,7 @@ import com.example.mycommish.core.presentation.component.NoDataIndicator
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import com.example.mycommish.feature.prize.domain.model.Prize
 import com.example.mycommish.feature.prize.presentation.component.PrizeCard
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun PrizeDetailsScreen(
@@ -78,7 +79,7 @@ private fun PrizeDetailsBody(
 @Composable
 private fun PrizeList(
     modifier: Modifier = Modifier,
-    prizes: List<Prize>,
+    prizes: ImmutableList<Prize>,
     contentPadding: PaddingValues
 ) {
     LazyColumn(
