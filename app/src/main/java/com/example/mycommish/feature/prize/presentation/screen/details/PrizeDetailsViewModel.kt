@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mycommish.feature.prize.domain.usecase.PrizeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -16,7 +17,7 @@ class PrizeDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val prizeDetailsUiState: StateFlow<PrizeDetailsUiState> =
-        prizeUseCases.getPrizes().map { PrizeDetailsUiState(it) }
+        prizeUseCases.getPrizes().map { PrizeDetailsUiState(it.toImmutableList()) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
