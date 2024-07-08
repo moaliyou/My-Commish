@@ -5,4 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.realm.kotlin) apply false
+    alias(libs.plugins.room) apply false
+    alias(libs.plugins.google.ksp) apply false
 }
