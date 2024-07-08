@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.realm.kotlin)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.androidx.room)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
