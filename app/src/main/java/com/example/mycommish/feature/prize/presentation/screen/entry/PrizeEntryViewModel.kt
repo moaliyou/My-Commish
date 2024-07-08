@@ -9,7 +9,6 @@ import com.example.mycommish.feature.prize.domain.model.Prize
 import com.example.mycommish.feature.prize.domain.usecase.PrizeUseCases
 import com.example.mycommish.feature.prize.presentation.screen.PrizeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +28,7 @@ class PrizeEntryViewModel @Inject constructor(
     }
 
     fun savePrize() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             prizeUseCases.addPrizeUseCase(prizeUiState.prize)
         }
     }
