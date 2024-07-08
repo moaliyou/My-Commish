@@ -82,7 +82,7 @@ private fun MyCommishTopAppBarPreview() {
             verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.extra_medium_padding))
         ) {
             MyCommishTopAppBar(
-                title = "Prize",
+                title = "PrizeEntity",
                 actionIcon = R.drawable.track_earnings_active_icon,
                 onActionClick = {}
             )
