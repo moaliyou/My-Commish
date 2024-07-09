@@ -1,13 +1,13 @@
 package com.example.mycommish.feature.prize.domain.usecase
 
-import com.example.mycommish.feature.prize.data.mapper.toPrizeObject
+import com.example.mycommish.feature.prize.data.mapper.toPrizeEntity
 import com.example.mycommish.feature.prize.domain.model.Prize
-import com.example.mycommish.feature.prize.domain.repository.PrizeRepository
+import com.example.mycommish.feature.prize.domain.repository.PrizeRepo
 
 class AddPrizeUseCase(
-    private val prizeRepository: PrizeRepository
+    private val prizeRepository: PrizeRepo
 ) {
     suspend operator fun invoke(prize: Prize) {
-        prizeRepository.insertPrize(prize.toPrizeObject())
+        prizeRepository.insertPrize(prize.toPrizeEntity())
     }
 }

@@ -4,7 +4,7 @@ import com.example.mycommish.feature.onboarding.domain.repository.UserManagerRep
 import com.example.mycommish.feature.onboarding.domain.use_case.AppEntryUseCase
 import com.example.mycommish.feature.onboarding.domain.use_case.ReadAppEntryUseCase
 import com.example.mycommish.feature.onboarding.domain.use_case.SaveAppEntryUseCase
-import com.example.mycommish.feature.prize.domain.repository.PrizeRepository
+import com.example.mycommish.feature.prize.domain.repository.PrizeRepo
 import com.example.mycommish.feature.prize.domain.usecase.AddPrizeUseCase
 import com.example.mycommish.feature.prize.domain.usecase.GetPrizes
 import com.example.mycommish.feature.prize.domain.usecase.PrizeEntryValidatorUseCase
@@ -31,7 +31,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun providePrizeUseCases(
-        prizeRepository: PrizeRepository
+        prizeRepository: PrizeRepo
     ) = PrizeUseCases(
         prizeEntryValidatorUseCase = PrizeEntryValidatorUseCase(),
         addPrizeUseCase = AddPrizeUseCase(prizeRepository),
