@@ -1,5 +1,8 @@
 package com.example.mycommish.core.di
 
+import android.app.Application
+import androidx.room.Room
+import com.example.mycommish.feature.prize.data.MyCommishDatabase
 import com.example.mycommish.feature.prize.data.local.datasource.PrizeObject
 import dagger.Module
 import dagger.Provides
@@ -20,4 +23,13 @@ object DatabaseModule {
         )
         return Realm.open(config)
     }
+
+    @Provides
+    @Singleton
+    fun providesRoomDatabase(application: Application): MyCommishDatabase =
+        Room.databaseBuilder(
+            application,
+            MyCommishDatabase::class.java,
+            "mycommish_db"
+        ).build()
 }

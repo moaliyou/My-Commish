@@ -3,7 +3,7 @@ package com.example.mycommish
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mycommish.core.di.DatabaseModule
 import com.example.mycommish.core.di.RepositoryModule
-import com.example.mycommish.feature.prize.data.local.datasource.Prize
+import com.example.mycommish.feature.prize.data.local.datasource.PrizeObject
 import com.example.mycommish.feature.prize.domain.repository.PrizeRepository
 import io.realm.kotlin.Realm
 import kotlinx.coroutines.flow.first
@@ -15,17 +15,17 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class PrizeLocalRepositoryTest {
+class PrizeObjectLocalRepositoryTest {
 
     private lateinit var prizeRepository: PrizeRepository
     private lateinit var databaseModule: Realm
 
-    private var prize1 = Prize().apply {
+    private var prize1 = PrizeObject().apply {
         name = "Photo Frame"
         value = 3.4
     }
 
-    private var prize2 = Prize().apply {
+    private var prize2 = PrizeObject().apply {
         name = "Visit Card"
         value = 1.7
     }
