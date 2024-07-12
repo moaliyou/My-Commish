@@ -12,14 +12,18 @@ fun NavController.navigateToPrizeEntry() = navigate(Route.Home.Prize.PrizeEntry.
 
 fun NavGraphBuilder.prizeGraph(
     onActionClick: () -> Unit,
-    onNavigateUp: () -> Unit
+    onNavigateUp: () -> Unit,
+    navigateToEditPrize: (Long) -> Unit
 ) {
     navigation(
         startDestination = Route.Home.Prize.PrizeDetails.route,
         route = Route.Home.Prize.route
     ) {
         composable(route = Route.Home.Prize.PrizeDetails.route) {
-            PrizeDetailsScreen(onActionClick = onActionClick)
+            PrizeDetailsScreen(
+                onActionClick = onActionClick,
+                navigateToEditPrize = { prizeId -> navigateToEditPrize(prizeId) }
+            )
         }
         composable(route = Route.Home.Prize.PrizeEntry.route) {
             PrizeEntryScreen(onNavigateUp = onNavigateUp)

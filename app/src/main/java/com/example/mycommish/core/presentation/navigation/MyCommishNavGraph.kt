@@ -1,5 +1,6 @@
 package com.example.mycommish.core.presentation.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -94,7 +95,8 @@ fun MyCommishNavHost(
                     onNavigateUp = {
                         navController.navigateUp()
                         onShowNavigationBar()
-                    }
+                    },
+                    navigateToEditPrize = { Log.d("prizeId", "prize id: $it") }
                 )
 
                 composable(route = Route.Home.TrackEarnings.route) {
