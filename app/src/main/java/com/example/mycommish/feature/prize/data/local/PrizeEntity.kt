@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "prizes")
 data class PrizeEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    var id: Long = 0,
     var name: String,
     var value: Double,
     var description: String?
