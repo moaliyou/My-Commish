@@ -9,11 +9,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PrizeDetailsViewModel @Inject constructor(
-    prizeUseCases: PrizeUseCases
+    private val prizeUseCases: PrizeUseCases
 ) : ViewModel() {
 
     val prizeDetailsUiState: StateFlow<PrizeDetailsUiState> =
@@ -23,6 +24,12 @@ class PrizeDetailsViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = PrizeDetailsUiState()
             )
+
+    fun deletePrize(id: Long) {
+        viewModelScope.launch {
+            prizeUseCases.deletePrize(prizeId = id)
+        }
+    }
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L

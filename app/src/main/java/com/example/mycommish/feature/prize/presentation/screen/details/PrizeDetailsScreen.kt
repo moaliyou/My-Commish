@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.mycommish.feature.prize.presentation.screen.details
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
@@ -9,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,6 +27,7 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun PrizeDetailsScreen(
     onActionClick: () -> Unit,
+    navigateToEditPrize: (Long) -> Unit,
     viewModel: PrizeDetailsViewModel = hiltViewModel()
 ) {
     val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
@@ -46,7 +44,11 @@ fun PrizeDetailsScreen(
         PrizeDetailsBody(
             prizeDetailsUiState = prizeDetailsUiState,
             contentPadding = innerPadding,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            onDeleteClick = {
+                viewModel.deletePrize(it)
+            },
+            onEditClick = { navigateToEditPrize(it) }
         )
     }
 }
@@ -55,7 +57,9 @@ fun PrizeDetailsScreen(
 private fun PrizeDetailsBody(
     modifier: Modifier = Modifier,
     prizeDetailsUiState: PrizeDetailsUiState,
-    contentPadding: PaddingValues = PaddingValues(dimensionResource(R.dimen.small_padding))
+    contentPadding: PaddingValues = PaddingValues(dimensionResource(R.dimen.small_padding)),
+    onDeleteClick: (Long) -> Unit,
+    onEditClick: (Long) -> Unit
 ) {
     val prizes = prizeDetailsUiState.prizeList
 
@@ -69,10 +73,15 @@ private fun PrizeDetailsBody(
         )
     } else {
         PrizeList(
+            modifier = modifier,
             prizes = prizes,
             contentPadding = contentPadding,
-            modifier = modifier
+            onDeleteClick = onDeleteClick,
+            onEditClick = onEditClick
         )
+
+
+
     }
 }
 
@@ -80,7 +89,9 @@ private fun PrizeDetailsBody(
 private fun PrizeList(
     modifier: Modifier = Modifier,
     prizes: ImmutableList<Prize>,
-    contentPadding: PaddingValues
+    contentPadding: PaddingValues,
+    onDeleteClick: (Long) -> Unit,
+    onEditClick: (Long) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -88,10 +99,12 @@ private fun PrizeList(
     ) {
         items(items = prizes) { prize ->
             PrizeCard(
+                modifier = Modifier
+                    .padding(dimensionResource(R.dimen.medium_padding)),
                 prizeName = prize.name,
                 prizeValue = prize.value,
-                modifier = Modifier
-                    .padding(dimensionResource(R.dimen.medium_padding))
+                onDeleteClick = { onDeleteClick(prize.id) },
+                onEditClick = { onEditClick(prize.id) }
             )
         }
     }
@@ -110,7 +123,8 @@ private fun PrizeList(
 private fun PrizeDetailsScreenPreview() {
     MyCommishTheme {
         PrizeDetailsScreen(
-            onActionClick = {}
+            onActionClick = {},
+            navigateToEditPrize = {}
         )
     }
 }
