@@ -24,4 +24,8 @@ class PrizeRepoImpl @Inject constructor(
     override suspend fun deletePrize(prizeEntity: PrizeEntity) {
         prizeDao.deletePrize(prizeEntity)
     }
+
+    override suspend fun deletePrizeById(id: Long) {
+        prizeDao.deletePrizeById(id)
+    }
 }

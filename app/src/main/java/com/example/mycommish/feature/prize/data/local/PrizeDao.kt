@@ -24,4 +24,7 @@ interface PrizeDao {
 
     @Delete
     suspend fun deletePrize(prizeEntity: PrizeEntity)
+
+    @Query("DELETE FROM prizes WHERE id = :id")
+    suspend fun deletePrizeById(id: Long)
 }
