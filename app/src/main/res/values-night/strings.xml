@@ -8,4 +8,7 @@
     <string name="next_button_label">next</string>
     <string name="get_started_button_label">Get Started</string>
     <string name="save_button_label">save button</string>
+    <string name="setting_icon">setting icon</string>
+    <string name="edit_menu_label">Edit</string>
+    <string name="delete_menu_label">Delete</string>
 </resources>
