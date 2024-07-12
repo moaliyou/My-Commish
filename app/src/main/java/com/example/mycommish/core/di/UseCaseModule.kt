@@ -6,7 +6,8 @@ import com.example.mycommish.feature.onboarding.domain.use_case.ReadAppEntryUseC
 import com.example.mycommish.feature.onboarding.domain.use_case.SaveAppEntryUseCase
 import com.example.mycommish.feature.prize.domain.repository.PrizeRepo
 import com.example.mycommish.feature.prize.domain.usecase.AddPrizeUseCase
-import com.example.mycommish.feature.prize.domain.usecase.GetPrizes
+import com.example.mycommish.feature.prize.domain.usecase.DeletePrizeUseCase
+import com.example.mycommish.feature.prize.domain.usecase.GetPrizesUseCase
 import com.example.mycommish.feature.prize.domain.usecase.PrizeEntryValidatorUseCase
 import com.example.mycommish.feature.prize.domain.usecase.PrizeUseCases
 import dagger.Module
@@ -34,8 +35,9 @@ object UseCaseModule {
         prizeRepository: PrizeRepo
     ) = PrizeUseCases(
         prizeEntryValidatorUseCase = PrizeEntryValidatorUseCase(),
-        addPrizeUseCase = AddPrizeUseCase(prizeRepository),
-        getPrizes = GetPrizes(prizeRepository)
+        addPrize = AddPrizeUseCase(prizeRepository),
+        getPrizes = GetPrizesUseCase(prizeRepository),
+        deletePrize = DeletePrizeUseCase(prizeRepository)
     )
 
 }
