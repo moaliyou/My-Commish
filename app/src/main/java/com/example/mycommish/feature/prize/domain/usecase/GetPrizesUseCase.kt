@@ -6,7 +6,7 @@ import com.example.mycommish.feature.prize.domain.repository.PrizeRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetPrizes(
+class GetPrizesUseCase(
     private val prizeRepository: PrizeRepo
 ) {
     operator fun invoke(): Flow<List<Prize>> = prizeRepository.getAllPrizes().map {

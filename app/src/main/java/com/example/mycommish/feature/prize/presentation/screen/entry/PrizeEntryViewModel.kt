@@ -30,7 +30,7 @@ class PrizeEntryViewModel @Inject constructor(
 
     fun savePrize() {
         viewModelScope.launch(Dispatchers.IO) {
-            prizeUseCases.addPrizeUseCase(prizeUiState.prize)
+            prizeUseCases.addPrize(prizeUiState.prize)
         }
     }
 
