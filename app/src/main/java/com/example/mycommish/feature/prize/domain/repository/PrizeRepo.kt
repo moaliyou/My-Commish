@@ -9,4 +9,5 @@ interface PrizeRepo {
     suspend fun insertPrize(prizeEntity: PrizeEntity)
     suspend fun updatePrize(prizeEntity: PrizeEntity)
     suspend fun deletePrize(prizeEntity: PrizeEntity)
+    suspend fun deletePrizeById(id: Long)
 }
