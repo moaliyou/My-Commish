@@ -110,7 +110,10 @@ private fun PrizeMenu(
         ) {
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.edit_menu_label)) },
-                onClick = onEditClick,
+                onClick = {
+                    onDismissRequest()
+                    onEditClick()
+                },
                 leadingIcon = {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
@@ -120,7 +123,10 @@ private fun PrizeMenu(
             )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.delete_menu_label)) },
-                onClick = onDeleteClick,
+                onClick = {
+                    onDismissRequest()
+                    onDeleteClick()
+                },
                 leadingIcon = {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.ic_delete),
