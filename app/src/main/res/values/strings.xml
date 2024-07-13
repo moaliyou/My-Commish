@@ -22,5 +22,6 @@
     <string name="setting_icon">setting icon</string>
     <string name="edit_menu_label">Edit</string>
     <string name="delete_menu_label">Delete</string>
+    <string name="entry_exist_message">This %s already exists. Please enter a different %s.</string>
 
 </resources>
