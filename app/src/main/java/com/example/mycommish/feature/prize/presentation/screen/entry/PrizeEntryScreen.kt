@@ -53,6 +53,7 @@ fun PrizeEntryScreen(
                 MyCommishFloatingActionButton(
                     onClick = {
                         viewModel.savePrize()
+                        onNavigateUp()
                     }
                 )
             }
