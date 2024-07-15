@@ -14,7 +14,7 @@ interface PrizeDao {
     fun getAllPrizes(): Flow<List<PrizeEntity>>
 
     @Query("SELECT * FROM prizes WHERE id = :id")
-    fun getSinglePrizeById(id: Int): Flow<PrizeEntity?>
+    fun getSinglePrizeById(id: Long): Flow<PrizeEntity?>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPrize(prizeEntity: PrizeEntity)

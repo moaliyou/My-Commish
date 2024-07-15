@@ -11,7 +11,7 @@ class PrizeRepoImpl @Inject constructor(
 ) : PrizeRepo {
     override fun getAllPrizes(): Flow<List<PrizeEntity>> = prizeDao.getAllPrizes()
 
-    override fun getSinglePrizeById(id: Int) = prizeDao.getSinglePrizeById(id)
+    override fun getSinglePrizeById(id: Long) = prizeDao.getSinglePrizeById(id)
 
     override suspend fun insertPrize(prizeEntity: PrizeEntity) {
         prizeDao.insertPrize(prizeEntity)
