@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -14,14 +16,14 @@ import com.example.mycommish.R
 import com.example.mycommish.core.presentation.component.MyCommishFloatingActionButton
 import com.example.mycommish.core.presentation.component.MyCommishTopAppBar
 import com.example.mycommish.feature.prize.presentation.component.PrizeInputForm
-import com.example.mycommish.feature.prize.presentation.screen.entry.PrizeEntryViewModel
+import com.example.mycommish.feature.prize.presentation.navigation.PrizeEditViewModel
 
 @Composable
 fun PrizeEditScreen(
     onNavigateUp: () -> Unit,
-    viewModel: PrizeEntryViewModel = hiltViewModel()
+    viewModel: PrizeEditViewModel = hiltViewModel()
 ) {
-    val prizeUiState = viewModel.prizeUiState
+    val prizeUiState by viewModel.prizeUiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -36,7 +38,7 @@ fun PrizeEditScreen(
             if (prizeUiState.isEntryValid) {
                 MyCommishFloatingActionButton(
                     onClick = {
-                        //viewModel.savePrize()
+                        viewModel.updatePrize()
                         onNavigateUp()
                     }
                 )
