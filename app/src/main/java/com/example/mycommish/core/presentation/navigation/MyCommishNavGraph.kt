@@ -96,7 +96,10 @@ fun MyCommishNavHost(
                         navController.navigateUp()
                         onShowNavigationBar()
                     },
-                    navigateToEditPrize = navController::navigateToPrizeEdit
+                    navigateToEditPrize = { prizeId ->
+                        navController.navigateToPrizeEdit(prizeId)
+                        onHideNavigationBar()
+                    }
                 )
 
                 composable(route = Route.Home.TrackEarnings.route) {
