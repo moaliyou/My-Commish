@@ -79,9 +79,6 @@ private fun PrizeDetailsBody(
             onDeleteClick = onDeleteClick,
             onEditClick = onEditClick
         )
-
-
-
     }
 }
 

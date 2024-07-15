@@ -1,6 +1,5 @@
 package com.example.mycommish.core.presentation.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +22,7 @@ import com.example.mycommish.R
 import com.example.mycommish.core.presentation.component.CustomNavigationBar
 import com.example.mycommish.core.presentation.navigation.Route.Companion.navigationItems
 import com.example.mycommish.feature.onboarding.presentation.navigation.onBoardingScreen
+import com.example.mycommish.feature.prize.presentation.navigation.navigateToPrizeEdit
 import com.example.mycommish.feature.prize.presentation.navigation.navigateToPrizeEntry
 import com.example.mycommish.feature.prize.presentation.navigation.prizeGraph
 
@@ -96,7 +96,7 @@ fun MyCommishNavHost(
                         navController.navigateUp()
                         onShowNavigationBar()
                     },
-                    navigateToEditPrize = { Log.d("prizeId", "prize id: $it") }
+                    navigateToEditPrize = navController::navigateToPrizeEdit
                 )
 
                 composable(route = Route.Home.TrackEarnings.route) {
