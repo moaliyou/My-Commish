@@ -16,7 +16,6 @@ import com.example.mycommish.R
 import com.example.mycommish.core.presentation.component.MyCommishFloatingActionButton
 import com.example.mycommish.core.presentation.component.MyCommishTopAppBar
 import com.example.mycommish.feature.prize.presentation.component.PrizeInputForm
-import com.example.mycommish.feature.prize.presentation.navigation.PrizeEditViewModel
 
 @Composable
 fun PrizeEditScreen(

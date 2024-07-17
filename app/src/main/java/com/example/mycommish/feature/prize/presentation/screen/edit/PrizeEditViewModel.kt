@@ -1,4 +1,4 @@
-package com.example.mycommish.feature.prize.presentation.navigation
+package com.example.mycommish.feature.prize.presentation.screen.edit
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
