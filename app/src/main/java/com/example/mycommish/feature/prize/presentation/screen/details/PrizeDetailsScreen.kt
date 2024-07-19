@@ -27,7 +27,7 @@ import com.example.mycommish.core.presentation.component.MyCommishTopAppBar
 import com.example.mycommish.core.presentation.component.NoDataIndicator
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import com.example.mycommish.feature.prize.domain.model.Prize
-import com.example.mycommish.feature.prize.presentation.component.MyCommishAlertDialog
+import com.example.mycommish.core.presentation.component.MyCommishAlertDialog
 import com.example.mycommish.feature.prize.presentation.component.PrizeCard
 import kotlinx.collections.immutable.ImmutableList
 
