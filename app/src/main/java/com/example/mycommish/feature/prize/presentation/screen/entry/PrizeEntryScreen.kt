@@ -4,7 +4,10 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -41,7 +44,10 @@ fun PrizeEntryScreen(
                     onClick = {
                         viewModel.savePrize()
                         onNavigateUp()
-                    }
+                    },
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding()
                 )
             }
         },
@@ -50,6 +56,7 @@ fun PrizeEntryScreen(
             PrizeInputForm(
                 modifier = Modifier
                     .fillMaxSize()
+                    .systemBarsPadding()
                     .padding(dimensionResource(R.dimen.extra_medium_padding)),
                 prize = prizeUiState.prize,
                 onValueChange = viewModel::updateUiState,
