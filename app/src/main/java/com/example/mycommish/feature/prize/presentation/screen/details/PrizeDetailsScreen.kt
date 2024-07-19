@@ -7,10 +7,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -21,6 +27,7 @@ import com.example.mycommish.core.presentation.component.MyCommishTopAppBar
 import com.example.mycommish.core.presentation.component.NoDataIndicator
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import com.example.mycommish.feature.prize.domain.model.Prize
+import com.example.mycommish.feature.prize.presentation.component.MyCommishAlertDialog
 import com.example.mycommish.feature.prize.presentation.component.PrizeCard
 import kotlinx.collections.immutable.ImmutableList
 
@@ -31,6 +38,8 @@ fun PrizeDetailsScreen(
     viewModel: PrizeDetailsViewModel = hiltViewModel()
 ) {
     val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
+    var deletePrizeConfirmed by rememberSaveable { mutableStateOf(false) }
+    var prizeId by rememberSaveable { mutableLongStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -46,10 +55,27 @@ fun PrizeDetailsScreen(
             contentPadding = innerPadding,
             modifier = Modifier.fillMaxSize(),
             onDeleteClick = {
-                viewModel.deletePrize(it)
+                //viewModel.deletePrize(it)
+                deletePrizeConfirmed = !deletePrizeConfirmed
+                prizeId = it
             },
             onEditClick = { navigateToEditPrize(it) }
         )
+
+        if (deletePrizeConfirmed) {
+            MyCommishAlertDialog(
+                onDismissRequest = { deletePrizeConfirmed = !deletePrizeConfirmed },
+                onConfirmation = {
+                    viewModel.deletePrize(prizeId)
+                    deletePrizeConfirmed = !deletePrizeConfirmed
+                },
+                dialogTitle = "Deleting prize",
+                dialogText = "Are you sure to delete this prize?",
+                icon = Icons.Filled.Warning,
+                confirmButtonText = stringResource(R.string.delete_label_button),
+                dismissButtonText = stringResource(R.string.cancel_label_button)
+            )
+        }
     }
 }
 

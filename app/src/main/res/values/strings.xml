@@ -24,5 +24,7 @@
     <string name="delete_menu_label">Delete</string>
     <string name="entry_exist_message">This %s already exists. Please enter a different %s.</string>
     <string name="prize_edit_label">Edit Prize</string>
+    <string name="delete_label_button">Delete</string>
+    <string name="cancel_label_button">Cancel</string>
 
 </resources>
