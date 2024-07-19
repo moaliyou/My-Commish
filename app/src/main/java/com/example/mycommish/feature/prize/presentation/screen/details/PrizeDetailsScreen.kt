@@ -35,9 +35,9 @@ import kotlinx.collections.immutable.ImmutableList
 fun PrizeDetailsScreen(
     onActionClick: () -> Unit,
     navigateToEditPrize: (Long) -> Unit,
-    viewModel: PrizeDetailsViewModel = hiltViewModel()
+    prizeDetailsUiState: PrizeDetailsUiState,
+    onDeletePrize: (Long) -> Unit
 ) {
-    val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
     var deletePrizeConfirmed by rememberSaveable { mutableStateOf(false) }
     var prizeId by rememberSaveable { mutableLongStateOf(0) }
 
@@ -55,7 +55,6 @@ fun PrizeDetailsScreen(
             contentPadding = innerPadding,
             modifier = Modifier.fillMaxSize(),
             onDeleteClick = {
-                //viewModel.deletePrize(it)
                 deletePrizeConfirmed = !deletePrizeConfirmed
                 prizeId = it
             },
@@ -66,7 +65,7 @@ fun PrizeDetailsScreen(
             MyCommishAlertDialog(
                 onDismissRequest = { deletePrizeConfirmed = !deletePrizeConfirmed },
                 onConfirmation = {
-                    viewModel.deletePrize(prizeId)
+                    onDeletePrize(prizeId)
                     deletePrizeConfirmed = !deletePrizeConfirmed
                 },
                 dialogTitle = "Deleting prize",
@@ -144,10 +143,15 @@ private fun PrizeList(
 )
 @Composable
 private fun PrizeDetailsScreenPreview() {
+    val viewModel: PrizeDetailsViewModel = hiltViewModel()
+    val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
+
     MyCommishTheme {
         PrizeDetailsScreen(
             onActionClick = {},
-            navigateToEditPrize = {}
+            navigateToEditPrize = {},
+            prizeDetailsUiState = prizeDetailsUiState,
+            onDeletePrize = {}
         )
     }
 }
