@@ -3,8 +3,14 @@ package com.example.mycommish.feature.prize.presentation.screen.details
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -23,11 +29,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mycommish.R
+import com.example.mycommish.core.presentation.component.MyCommishAlertDialog
 import com.example.mycommish.core.presentation.component.MyCommishTopAppBar
 import com.example.mycommish.core.presentation.component.NoDataIndicator
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import com.example.mycommish.feature.prize.domain.model.Prize
-import com.example.mycommish.core.presentation.component.MyCommishAlertDialog
 import com.example.mycommish.feature.prize.presentation.component.PrizeCard
 import kotlinx.collections.immutable.ImmutableList
 
@@ -52,8 +58,13 @@ fun PrizeDetailsScreen(
     ) { innerPadding ->
         PrizeDetailsBody(
             prizeDetailsUiState = prizeDetailsUiState,
-            contentPadding = innerPadding,
-            modifier = Modifier.fillMaxSize(),
+            contentPadding = WindowInsets.safeDrawing
+                .only(WindowInsetsSides.Bottom)
+                .asPaddingValues(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .navigationBarsPadding(),
             onDeleteClick = {
                 deletePrizeConfirmed = !deletePrizeConfirmed
                 prizeId = it
