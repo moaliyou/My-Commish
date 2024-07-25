@@ -21,8 +21,11 @@ sealed class Route(
             inactiveIcon = R.drawable.prize_inactive_icon
         ) {
             data object PrizeDetails : Route(route = "prize_details")
-
             data object PrizeEntry : Route(route = "prize_entry")
+            data object PrizeEdit : Route(route = "prize_edit") {
+                const val PRIZE_ID = "prizeId"
+                val routeWithArgument = "$route/{$PRIZE_ID}"
+            }
         }
 
         data object TrackEarnings : Route(
