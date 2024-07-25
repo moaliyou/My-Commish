@@ -22,6 +22,7 @@ import com.example.mycommish.R
 import com.example.mycommish.core.presentation.component.CustomNavigationBar
 import com.example.mycommish.core.presentation.navigation.Route.Companion.navigationItems
 import com.example.mycommish.feature.onboarding.presentation.navigation.onBoardingScreen
+import com.example.mycommish.feature.prize.presentation.navigation.navigateToPrizeEdit
 import com.example.mycommish.feature.prize.presentation.navigation.navigateToPrizeEntry
 import com.example.mycommish.feature.prize.presentation.navigation.prizeGraph
 
@@ -94,6 +95,10 @@ fun MyCommishNavHost(
                     onNavigateUp = {
                         navController.navigateUp()
                         onShowNavigationBar()
+                    },
+                    navigateToEditPrize = { prizeId ->
+                        navController.navigateToPrizeEdit(prizeId)
+                        onHideNavigationBar()
                     }
                 )
 

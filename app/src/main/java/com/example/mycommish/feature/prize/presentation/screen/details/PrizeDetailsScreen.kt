@@ -1,25 +1,35 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.mycommish.feature.prize.presentation.screen.details
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mycommish.R
+import com.example.mycommish.core.presentation.component.MyCommishAlertDialog
 import com.example.mycommish.core.presentation.component.MyCommishTopAppBar
 import com.example.mycommish.core.presentation.component.NoDataIndicator
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
@@ -30,9 +40,12 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun PrizeDetailsScreen(
     onActionClick: () -> Unit,
-    viewModel: PrizeDetailsViewModel = hiltViewModel()
+    navigateToEditPrize: (Long) -> Unit,
+    prizeDetailsUiState: PrizeDetailsUiState,
+    onDeletePrize: (Long) -> Unit
 ) {
-    val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
+    var deletePrizeConfirmed by rememberSaveable { mutableStateOf(false) }
+    var prizeId by rememberSaveable { mutableLongStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -45,9 +58,34 @@ fun PrizeDetailsScreen(
     ) { innerPadding ->
         PrizeDetailsBody(
             prizeDetailsUiState = prizeDetailsUiState,
-            contentPadding = innerPadding,
-            modifier = Modifier.fillMaxSize()
+            contentPadding = WindowInsets.safeDrawing
+                .only(WindowInsetsSides.Bottom)
+                .asPaddingValues(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .navigationBarsPadding(),
+            onDeleteClick = {
+                deletePrizeConfirmed = !deletePrizeConfirmed
+                prizeId = it
+            },
+            onEditClick = { navigateToEditPrize(it) }
         )
+
+        if (deletePrizeConfirmed) {
+            MyCommishAlertDialog(
+                onDismissRequest = { deletePrizeConfirmed = !deletePrizeConfirmed },
+                onConfirmation = {
+                    onDeletePrize(prizeId)
+                    deletePrizeConfirmed = !deletePrizeConfirmed
+                },
+                dialogTitle = "Deleting prize",
+                dialogText = "Are you sure to delete this prize?",
+                icon = Icons.Filled.Warning,
+                confirmButtonText = stringResource(R.string.delete_label_button),
+                dismissButtonText = stringResource(R.string.cancel_label_button)
+            )
+        }
     }
 }
 
@@ -55,7 +93,9 @@ fun PrizeDetailsScreen(
 private fun PrizeDetailsBody(
     modifier: Modifier = Modifier,
     prizeDetailsUiState: PrizeDetailsUiState,
-    contentPadding: PaddingValues = PaddingValues(dimensionResource(R.dimen.small_padding))
+    contentPadding: PaddingValues = PaddingValues(dimensionResource(R.dimen.small_padding)),
+    onDeleteClick: (Long) -> Unit,
+    onEditClick: (Long) -> Unit
 ) {
     val prizes = prizeDetailsUiState.prizeList
 
@@ -69,9 +109,11 @@ private fun PrizeDetailsBody(
         )
     } else {
         PrizeList(
+            modifier = modifier,
             prizes = prizes,
             contentPadding = contentPadding,
-            modifier = modifier
+            onDeleteClick = onDeleteClick,
+            onEditClick = onEditClick
         )
     }
 }
@@ -80,7 +122,9 @@ private fun PrizeDetailsBody(
 private fun PrizeList(
     modifier: Modifier = Modifier,
     prizes: ImmutableList<Prize>,
-    contentPadding: PaddingValues
+    contentPadding: PaddingValues,
+    onDeleteClick: (Long) -> Unit,
+    onEditClick: (Long) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -88,10 +132,12 @@ private fun PrizeList(
     ) {
         items(items = prizes) { prize ->
             PrizeCard(
+                modifier = Modifier
+                    .padding(dimensionResource(R.dimen.medium_padding)),
                 prizeName = prize.name,
                 prizeValue = prize.value,
-                modifier = Modifier
-                    .padding(dimensionResource(R.dimen.medium_padding))
+                onDeleteClick = { onDeleteClick(prize.id) },
+                onEditClick = { onEditClick(prize.id) }
             )
         }
     }
@@ -108,9 +154,15 @@ private fun PrizeList(
 )
 @Composable
 private fun PrizeDetailsScreenPreview() {
+    val viewModel: PrizeDetailsViewModel = hiltViewModel()
+    val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
+
     MyCommishTheme {
         PrizeDetailsScreen(
-            onActionClick = {}
+            onActionClick = {},
+            navigateToEditPrize = {},
+            prizeDetailsUiState = prizeDetailsUiState,
+            onDeletePrize = {}
         )
     }
 }
