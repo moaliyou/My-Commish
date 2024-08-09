@@ -24,12 +24,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.mycommish.R
 import com.example.mycommish.core.presentation.component.MyCommishFilledTextField
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
+import com.example.mycommish.core.util.AppConstants
 import com.example.mycommish.feature.prize.domain.model.Prize
 
 @Composable
 fun PrizeInputForm(
-    prize: Prize,
     modifier: Modifier = Modifier,
+    prize: Prize,
+    validatorHasErrors: Boolean,
+    errorMessage: String,
     onValueChange: (Prize) -> Unit = {},
     contentPadding: PaddingValues = PaddingValues()
 ) {
@@ -45,15 +48,21 @@ fun PrizeInputForm(
                 .fillMaxWidth(),
             text = prize.name,
             onValueChange = { newPrizeName -> onValueChange(prize.copy(name = newPrizeName)) },
-            label = { Text(text = stringResource(R.string.prize_name_label)) },
-            keyboardOption = KeyboardOptions(imeAction = ImeAction.Next)
+            placeholder = { Text(text = stringResource(R.string.prize_name_label)) },
+            keyboardOption = KeyboardOptions(imeAction = ImeAction.Next),
+            isError = validatorHasErrors,
+            supportingText = {
+                if (validatorHasErrors) {
+                    Text(text = errorMessage)
+                }
+            }
         )
         MyCommishFilledTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             text = prize.value,
             onValueChange = { newPrizeValue -> onValueChange(prize.copy(value = newPrizeValue)) },
-            label = { Text(text = stringResource(R.string.prize_value_label)) },
+            placeholder = { Text(text = stringResource(R.string.prize_value_label)) },
             keyboardOption = KeyboardOptions(
                 keyboardType = KeyboardType.Decimal,
                 imeAction = ImeAction.Done
@@ -68,7 +77,7 @@ fun PrizeInputForm(
             onValueChange = { newPrizeDescription ->
                 onValueChange(prize.copy(description = newPrizeDescription))
             },
-            label = {
+            placeholder = {
                 Text(text = stringResource(R.string.prize_description_label))
             },
             singleLine = false
@@ -92,7 +101,11 @@ private fun PrizeInputFormPreview() {
                 .fillMaxSize()
                 .padding(dimensionResource(R.dimen.medium_padding))
         ) {
-            PrizeInputForm(prize = Prize())
+            PrizeInputForm(
+                prize = Prize(),
+                validatorHasErrors = true,
+                errorMessage = AppConstants.PRIZE_NAME_TOO_SHORT_ERROR
+            )
         }
     }
 }
