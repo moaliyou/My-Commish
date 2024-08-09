@@ -10,9 +10,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,20 +33,30 @@ fun MyCommishFilledTextField(
     text: String,
     onValueChange: (String) -> Unit,
     singleLine: Boolean = true,
-    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOption: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    isError: Boolean = false,
+    supportingText: @Composable (() -> Unit)? = null,
 ) {
-    TextField(
+    OutlinedTextField(
         modifier = modifier,
         value = text,
         onValueChange = onValueChange,
         singleLine = singleLine,
-        label = label,
-        colors = TextFieldDefaults.colors(
-            focusedIndicatorColor = MaterialTheme.colorScheme.surfaceContainer,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.surfaceContainer
+        placeholder = placeholder,
+        isError = isError,
+        supportingText = supportingText,
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
+            focusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+            errorContainerColor = MaterialTheme.colorScheme.errorContainer,
+            errorBorderColor = MaterialTheme.colorScheme.error,
+            errorTextColor = MaterialTheme.colorScheme.onErrorContainer,
+            errorSupportingTextColor = MaterialTheme.colorScheme.error
         ),
         shape = RoundedCornerShape(dimensionResource(R.dimen.medium_padding)),
         visualTransformation = visualTransformation,
@@ -59,6 +69,7 @@ fun MyCommishFilledTextField(
 @Composable
 private fun MyCommishFilledTextFieldPreview() {
     var text by remember { mutableStateOf("") }
+    var validatorHasError by remember { mutableStateOf(false) }
 
     MyCommishTheme {
         Column(
@@ -72,15 +83,24 @@ private fun MyCommishFilledTextFieldPreview() {
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = text,
-                onValueChange = { text = it },
-                label = { Text(text = stringResource(R.string.prize_name_label)) }
+                onValueChange = {
+                    text = it
+                    validatorHasError = it.length < 3 && it.isNotEmpty()
+                },
+                placeholder = { Text(text = stringResource(R.string.prize_name_label)) },
+                isError = validatorHasError,
+                supportingText = {
+                    if (validatorHasError) {
+                        Text(text = "Prize name must be at least 3 characters")
+                    }
+                }
             )
             MyCommishFilledTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = text,
                 onValueChange = { text = it },
-                label = { Text(text = stringResource(R.string.prize_value_label)) }
+                placeholder = { Text(text = stringResource(R.string.prize_value_label)) }
             )
             MyCommishFilledTextField(
                 modifier = Modifier
@@ -88,7 +108,7 @@ private fun MyCommishFilledTextFieldPreview() {
                     .fillMaxHeight(0.3f),
                 text = text,
                 onValueChange = { text = it },
-                label = {
+                placeholder = {
                     Text(text = stringResource(R.string.prize_description_label))
                 },
                 singleLine = false
