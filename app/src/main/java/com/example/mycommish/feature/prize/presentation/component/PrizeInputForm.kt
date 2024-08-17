@@ -67,7 +67,13 @@ fun PrizeInputForm(
                 keyboardType = KeyboardType.Decimal,
                 imeAction = ImeAction.Done
             ),
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            isError = validatorHasErrors,
+            supportingText = {
+                if (validatorHasErrors) {
+                    Text(text = errorMessage)
+                }
+            }
         )
         MyCommishFilledTextField(
             modifier = Modifier
