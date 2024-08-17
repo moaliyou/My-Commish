@@ -51,7 +51,9 @@ fun PrizeEditScreen(
                     .padding(dimensionResource(R.dimen.extra_medium_padding)),
                 prize = prizeUiState.prize,
                 onValueChange = viewModel::updateUiState,
-                contentPadding = innerPadding
+                contentPadding = innerPadding,
+                validatorHasErrors = prizeUiState.validatorHasError,
+                errorMessage = prizeUiState.errorMessage
             )
             BackHandler(
                 onBack = onNavigateUp
