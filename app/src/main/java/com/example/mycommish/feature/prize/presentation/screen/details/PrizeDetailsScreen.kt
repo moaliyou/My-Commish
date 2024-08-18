@@ -59,7 +59,8 @@ fun PrizeDetailsScreen(
     onActionClick: () -> Unit,
     navigateToEditPrize: (Long) -> Unit,
     prizeDetailsUiState: PrizeDetailsUiState,
-    onDeletePrize: (Long) -> Unit
+    onDeletePrize: (Long) -> Unit,
+    onFilter: () -> Unit
 ) {
     var deletePrizeConfirmed by rememberSaveable { mutableStateOf(false) }
     var prizeId by rememberSaveable { mutableLongStateOf(0) }
@@ -74,19 +75,20 @@ fun PrizeDetailsScreen(
         }
     ) { innerPadding ->
         PrizeDetailsBody(
-            prizeDetailsUiState = prizeDetailsUiState,
-            contentPadding = WindowInsets.safeDrawing
-                .only(WindowInsetsSides.Bottom)
-                .asPaddingValues(),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .navigationBarsPadding(),
+            prizeDetailsUiState = prizeDetailsUiState,
+            contentPadding = WindowInsets.safeDrawing
+                .only(WindowInsetsSides.Bottom)
+                .asPaddingValues(),
             onDeleteClick = {
                 deletePrizeConfirmed = !deletePrizeConfirmed
                 prizeId = it
             },
-            onEditClick = { navigateToEditPrize(it) }
+            onEditClick = { navigateToEditPrize(it) },
+            onFilter = onFilter
         )
 
         if (deletePrizeConfirmed) {
@@ -112,7 +114,8 @@ private fun PrizeDetailsBody(
     prizeDetailsUiState: PrizeDetailsUiState,
     contentPadding: PaddingValues = PaddingValues(dimensionResource(R.dimen.small_padding)),
     onDeleteClick: (Long) -> Unit,
-    onEditClick: (Long) -> Unit
+    onEditClick: (Long) -> Unit,
+    onFilter: () -> Unit
 ) {
     val prizes = prizeDetailsUiState.prizeList
 
@@ -129,7 +132,8 @@ private fun PrizeDetailsBody(
             modifier = modifier
         ) {
             PrizeFilterChip(
-                modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.extra_medium_padding))
+                modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.extra_medium_padding)),
+                onFilter = onFilter
             )
             PrizeList(
                 prizes = prizeDetailsUiState.prizeList,
@@ -143,7 +147,8 @@ private fun PrizeDetailsBody(
 
 @Composable
 private fun PrizeFilterChip(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFilter: () -> Unit
 ) {
     var selectedFilter by remember { mutableStateOf(false) }
 
@@ -173,7 +178,7 @@ private fun PrizeFilterChip(
             maxItemsInEachRow = 4
         ) {
             FilterChip(
-                onClick = { selectedFilter = !selectedFilter },
+                onClick = onFilter,
                 label = {
                     Text("Highest value")
                 },
@@ -238,7 +243,8 @@ private fun PrizeDetailsScreenPreview() {
             onActionClick = {},
             navigateToEditPrize = {},
             prizeDetailsUiState = prizeDetailsUiState,
-            onDeletePrize = {}
+            onDeletePrize = {},
+            onFilter = {}
         )
     }
 }
