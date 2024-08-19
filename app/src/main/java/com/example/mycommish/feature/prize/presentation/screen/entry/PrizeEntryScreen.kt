@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -27,7 +29,7 @@ fun PrizeEntryScreen(
     onNavigateUp: () -> Unit,
     viewModel: PrizeEntryViewModel = hiltViewModel()
 ) {
-    val prizeUiState = viewModel.prizeUiState
+    val prizeUiState by viewModel.prizeUiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -60,7 +62,9 @@ fun PrizeEntryScreen(
                     .padding(dimensionResource(R.dimen.extra_medium_padding)),
                 prize = prizeUiState.prize,
                 onValueChange = viewModel::updateUiState,
-                contentPadding = innerPadding
+                contentPadding = innerPadding,
+                validatorHasErrors = prizeUiState.validatorHasError,
+                errorMessage = prizeUiState.errorMessage
             )
             BackHandler(
                 onBack = onNavigateUp
