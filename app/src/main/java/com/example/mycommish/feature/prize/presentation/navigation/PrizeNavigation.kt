@@ -1,5 +1,6 @@
 package com.example.mycommish.feature.prize.presentation.navigation
 
+import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,7 +37,10 @@ fun NavGraphBuilder.prizeGraph(
                 onActionClick = onActionClick,
                 navigateToEditPrize = { prizeId -> navigateToEditPrize(prizeId) },
                 prizeDetailsUiState = prizeDetailsUiState,
-                onDeletePrize = { prizeId -> viewModel.deletePrize(prizeId) }
+                onDeletePrize = { prizeId -> viewModel.deletePrize(prizeId) },
+                onFilter = {
+                    Log.d("onFilter", viewModel.getHighestValuePrizes().toString())
+                }
             )
         }
         composable(route = Route.Home.Prize.PrizeEntry.route) {

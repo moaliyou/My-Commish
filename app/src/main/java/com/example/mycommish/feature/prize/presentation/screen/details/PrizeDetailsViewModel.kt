@@ -2,8 +2,10 @@ package com.example.mycommish.feature.prize.presentation.screen.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mycommish.feature.prize.domain.model.Prize
 import com.example.mycommish.feature.prize.domain.usecase.PrizeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +32,12 @@ class PrizeDetailsViewModel @Inject constructor(
             prizeUseCases.deletePrize(prizeId = id)
         }
     }
+
+    fun getHighestValuePrizes(): ImmutableList<Prize> =
+            prizeDetailsUiState.value.prizeList
+                .sortedByDescending { it.value.toDouble() }
+                .toImmutableList()
+
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
