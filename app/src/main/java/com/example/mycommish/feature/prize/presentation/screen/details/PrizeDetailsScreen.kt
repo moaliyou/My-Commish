@@ -36,6 +36,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,15 +54,16 @@ import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
 import com.example.mycommish.feature.prize.domain.model.Prize
 import com.example.mycommish.feature.prize.presentation.component.PrizeCard
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun PrizeDetailsScreen(
     onActionClick: () -> Unit,
     navigateToEditPrize: (Long) -> Unit,
     prizeDetailsUiState: PrizeDetailsUiState,
-    onDeletePrize: (Long) -> Unit,
-    onFilter: () -> Unit,
-    selectedFilter: Boolean = false
+    onDeletePrize: (Long) -> Unit
 ) {
     var deletePrizeConfirmed by rememberSaveable { mutableStateOf(false) }
     var prizeId by rememberSaveable { mutableLongStateOf(0) }
@@ -87,9 +90,7 @@ fun PrizeDetailsScreen(
                 deletePrizeConfirmed = !deletePrizeConfirmed
                 prizeId = it
             },
-            onEditClick = { navigateToEditPrize(it) },
-            onFilter = onFilter,
-            selectedFilter = selectedFilter
+            onEditClick = { navigateToEditPrize(it) }
         )
 
         if (deletePrizeConfirmed) {
@@ -115,9 +116,7 @@ private fun PrizeDetailsBody(
     prizeDetailsUiState: PrizeDetailsUiState,
     contentPadding: PaddingValues = PaddingValues(dimensionResource(R.dimen.small_padding)),
     onDeleteClick: (Long) -> Unit,
-    onEditClick: (Long) -> Unit,
-    onFilter: () -> Unit,
-    selectedFilter: Boolean = false
+    onEditClick: (Long) -> Unit
 ) {
     val prizes = prizeDetailsUiState.prizeList
 
@@ -130,16 +129,31 @@ private fun PrizeDetailsBody(
             contentPadding = contentPadding
         )
     } else {
+        var selectedFilter by remember { mutableStateOf(false) }
+        var sortedPrizeList by remember { mutableStateOf(prizeDetailsUiState.prizeList) }
+        val mCoroutineScape = rememberCoroutineScope()
+
         Column(
             modifier = modifier
         ) {
             PrizeFilterChip(
                 modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.extra_medium_padding)),
-                onFilter = onFilter,
+                onFilter = {
+                    selectedFilter = !selectedFilter
+                    mCoroutineScape.launch(Dispatchers.IO) {
+                        if (selectedFilter) {
+                            sortedPrizeList =
+                                sortedPrizeList.sortedByDescending { it.value }.toImmutableList()
+                        } else {
+                            sortedPrizeList =
+                                sortedPrizeList.sortedBy { it.name }.toImmutableList()
+                        }
+                    }
+                },
                 selectedFilter = selectedFilter
             )
             PrizeList(
-                prizes = prizeDetailsUiState.prizeList,
+                prizes = sortedPrizeList,
                 contentPadding = contentPadding,
                 onDeleteClick = onDeleteClick,
                 onEditClick = onEditClick
@@ -170,7 +184,7 @@ private fun PrizeFilterChip(
             )
             Text(
                 text = "Filter",
-                style = MaterialTheme.typography.titleMedium,   
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
         }
@@ -245,8 +259,7 @@ private fun PrizeDetailsScreenPreview() {
             onActionClick = {},
             navigateToEditPrize = {},
             prizeDetailsUiState = prizeDetailsUiState,
-            onDeletePrize = {},
-            onFilter = {},
+            onDeletePrize = {}
         )
     }
 }
