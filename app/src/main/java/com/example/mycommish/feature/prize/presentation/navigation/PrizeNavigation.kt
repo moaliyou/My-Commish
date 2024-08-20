@@ -1,8 +1,10 @@
 package com.example.mycommish.feature.prize.presentation.navigation
 
-import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -32,6 +34,7 @@ fun NavGraphBuilder.prizeGraph(
         composable(route = Route.Home.Prize.PrizeDetails.route) {
             val viewModel: PrizeDetailsViewModel = hiltViewModel()
             val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
+            var selectedFilter by remember { mutableStateOf(false) }
 
             PrizeDetailsScreen(
                 onActionClick = onActionClick,
@@ -39,8 +42,10 @@ fun NavGraphBuilder.prizeGraph(
                 prizeDetailsUiState = prizeDetailsUiState,
                 onDeletePrize = { prizeId -> viewModel.deletePrize(prizeId) },
                 onFilter = {
-                    Log.d("onFilter", viewModel.getHighestValuePrizes().toString())
-                }
+                    viewModel.sortByHighestPrizeValue()
+                    selectedFilter = !selectedFilter
+                },
+                selectedFilter = selectedFilter
             )
         }
         composable(route = Route.Home.Prize.PrizeEntry.route) {

@@ -36,7 +36,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -60,7 +59,8 @@ fun PrizeDetailsScreen(
     navigateToEditPrize: (Long) -> Unit,
     prizeDetailsUiState: PrizeDetailsUiState,
     onDeletePrize: (Long) -> Unit,
-    onFilter: () -> Unit
+    onFilter: () -> Unit,
+    selectedFilter: Boolean = false
 ) {
     var deletePrizeConfirmed by rememberSaveable { mutableStateOf(false) }
     var prizeId by rememberSaveable { mutableLongStateOf(0) }
@@ -88,7 +88,8 @@ fun PrizeDetailsScreen(
                 prizeId = it
             },
             onEditClick = { navigateToEditPrize(it) },
-            onFilter = onFilter
+            onFilter = onFilter,
+            selectedFilter = selectedFilter
         )
 
         if (deletePrizeConfirmed) {
@@ -115,7 +116,8 @@ private fun PrizeDetailsBody(
     contentPadding: PaddingValues = PaddingValues(dimensionResource(R.dimen.small_padding)),
     onDeleteClick: (Long) -> Unit,
     onEditClick: (Long) -> Unit,
-    onFilter: () -> Unit
+    onFilter: () -> Unit,
+    selectedFilter: Boolean = false
 ) {
     val prizes = prizeDetailsUiState.prizeList
 
@@ -133,7 +135,8 @@ private fun PrizeDetailsBody(
         ) {
             PrizeFilterChip(
                 modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.extra_medium_padding)),
-                onFilter = onFilter
+                onFilter = onFilter,
+                selectedFilter = selectedFilter
             )
             PrizeList(
                 prizes = prizeDetailsUiState.prizeList,
@@ -148,10 +151,9 @@ private fun PrizeDetailsBody(
 @Composable
 private fun PrizeFilterChip(
     modifier: Modifier = Modifier,
-    onFilter: () -> Unit
+    onFilter: () -> Unit,
+    selectedFilter: Boolean = false
 ) {
-    var selectedFilter by remember { mutableStateOf(false) }
-
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -244,7 +246,7 @@ private fun PrizeDetailsScreenPreview() {
             navigateToEditPrize = {},
             prizeDetailsUiState = prizeDetailsUiState,
             onDeletePrize = {},
-            onFilter = {}
+            onFilter = {},
         )
     }
 }

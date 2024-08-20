@@ -2,15 +2,14 @@ package com.example.mycommish.feature.prize.presentation.screen.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mycommish.feature.prize.domain.model.Prize
 import com.example.mycommish.feature.prize.domain.usecase.PrizeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +18,8 @@ class PrizeDetailsViewModel @Inject constructor(
     private val prizeUseCases: PrizeUseCases
 ) : ViewModel() {
 
-    val prizeDetailsUiState: StateFlow<PrizeDetailsUiState> =
+    private val _uiState = MutableStateFlow(PrizeDetailsUiState())
+    val prizeDetailsUiState =
         prizeUseCases.getPrizes().map { PrizeDetailsUiState(it.toImmutableList()) }
             .stateIn(
                 scope = viewModelScope,
@@ -33,10 +33,15 @@ class PrizeDetailsViewModel @Inject constructor(
         }
     }
 
-    fun getHighestValuePrizes(): ImmutableList<Prize> =
-            prizeDetailsUiState.value.prizeList
-                .sortedByDescending { it.value.toDouble() }
-                .toImmutableList()
+    fun sortByHighestPrizeValue() {
+        _uiState.update { currentState ->
+            currentState.copy(
+//                prizeList = prizeDetailsUiState.value.toString()
+//                    .sortedByDescending { prize -> prize.value.toDouble() }
+//                    .toImmutableList()
+            )
+        }
+    }
 
 
     companion object {
