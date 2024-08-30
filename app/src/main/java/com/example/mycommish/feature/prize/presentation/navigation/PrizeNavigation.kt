@@ -32,6 +32,7 @@ fun NavGraphBuilder.prizeGraph(
         composable(route = Route.Home.Prize.PrizeDetails.route) {
             val viewModel: PrizeDetailsViewModel = hiltViewModel()
             val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
+            val searchTextState by viewModel.searchTextState.collectAsState()
 
             PrizeDetailsScreen(
                 onActionClick = onActionClick,
@@ -44,7 +45,14 @@ fun NavGraphBuilder.prizeGraph(
                     } else {
                         viewModel.sortBy(sortingType = SortTypes.ByName)
                     }
-                }
+                },
+                onSearchValueChange = { inputValue ->
+                    viewModel.onSearch(inputValue)
+                },
+                onSearchClear = {
+                    viewModel.clearSearchText()
+                },
+                searchText = searchTextState
             )
         }
         composable(route = Route.Home.Prize.PrizeEntry.route) {
