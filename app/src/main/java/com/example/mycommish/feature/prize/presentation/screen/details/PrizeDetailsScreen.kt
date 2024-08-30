@@ -13,10 +13,15 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,13 +31,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mycommish.R
 import com.example.mycommish.core.presentation.component.MyCommishAlertDialog
 import com.example.mycommish.core.presentation.component.MyCommishFilterChip
+import com.example.mycommish.core.presentation.component.MyCommishSearchField
 import com.example.mycommish.core.presentation.component.MyCommishTopAppBar
 import com.example.mycommish.core.presentation.component.NoDataIndicator
 import com.example.mycommish.core.presentation.ui.theme.MyCommishTheme
@@ -48,6 +56,9 @@ fun PrizeDetailsScreen(
     prizeDetailsUiState: PrizeDetailsUiState,
     onDeletePrize: (Long) -> Unit,
     onSortClick: (SortTypes) -> Unit,
+    onSearchValueChange: (String) -> Unit,
+    onSearchClear: () -> Unit,
+    searchText: String = "",
 ) {
     var deletePrizeConfirmed by rememberSaveable { mutableStateOf(false) }
     var prizeId by rememberSaveable { mutableLongStateOf(0) }
@@ -75,7 +86,10 @@ fun PrizeDetailsScreen(
                 prizeId = it
             },
             onEditClick = { navigateToEditPrize(it) },
-            onSortClick = onSortClick
+            onSortClick = onSortClick,
+            onSearchValueChange = onSearchValueChange,
+            onSearchClear = onSearchClear,
+            searchText = searchText
         )
 
         if (deletePrizeConfirmed) {
@@ -103,6 +117,9 @@ private fun PrizeDetailsBody(
     onDeleteClick: (Long) -> Unit,
     onEditClick: (Long) -> Unit,
     onSortClick: (SortTypes) -> Unit,
+    onSearchValueChange: (String) -> Unit,
+    onSearchClear: () -> Unit,
+    searchText: String = ""
 ) {
     val prizes = prizeDetailsUiState.prizeList
 
@@ -118,6 +135,26 @@ private fun PrizeDetailsBody(
         Column(
             modifier = modifier
         ) {
+            MyCommishSearchField(
+                inputValue = searchText,
+                onInputValueChange = onSearchValueChange,
+                placeholder = stringResource(R.string.search_prize_placeholder),
+                trailingIcon = {
+                    if (searchText.isNotEmpty() && searchText.isNotBlank()) {
+                        IconButton(onClick = onSearchClear) {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
+                                contentDescription = "Clear icon",
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = dimensionResource(R.dimen.medium_padding))
+            )
             MyCommishFilterChip(
                 selectedSortOption = prizeDetailsUiState.selectedSortOption,
                 onSortClick = onSortClick,
@@ -183,7 +220,9 @@ private fun PrizeDetailsScreenPreview() {
             navigateToEditPrize = {},
             prizeDetailsUiState = prizeDetailsUiState,
             onDeletePrize = {},
-            onSortClick = {}
+            onSortClick = {},
+            onSearchValueChange = {},
+            onSearchClear = {},
         )
     }
 }
