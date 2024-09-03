@@ -19,7 +19,9 @@ fun ScrollToTopButton(
     FloatingActionButton(
         onClick = onClick,
         shape = CircleShape,
-        modifier = modifier
+        modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        contentColor = MaterialTheme.colorScheme.onSurface
     ) {
         Icon(
             Icons.Filled.KeyboardArrowUp,

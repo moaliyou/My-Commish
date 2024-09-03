@@ -224,7 +224,8 @@ private fun PrizeList(
                     scope.launch {
                         lazyListState.animateScrollToItem(0)
                     }
-                }
+                },
+                modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
             )
         }
     }
