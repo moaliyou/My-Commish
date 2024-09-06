@@ -26,5 +26,6 @@
     <string name="prize_edit_label">Edit Prize</string>
     <string name="delete_label_button">Delete</string>
     <string name="cancel_label_button">Cancel</string>
+    <string name="search_prize_placeholder">Search by name or value</string>
 
 </resources>
