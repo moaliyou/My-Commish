@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.example.mycommish.core.presentation.navigation.Route
+import com.example.mycommish.feature.prize.domain.util.SortTypes
 import com.example.mycommish.feature.prize.presentation.screen.details.PrizeDetailsScreen
 import com.example.mycommish.feature.prize.presentation.screen.details.PrizeDetailsViewModel
 import com.example.mycommish.feature.prize.presentation.screen.edit.PrizeEditScreen
@@ -31,12 +32,27 @@ fun NavGraphBuilder.prizeGraph(
         composable(route = Route.Home.Prize.PrizeDetails.route) {
             val viewModel: PrizeDetailsViewModel = hiltViewModel()
             val prizeDetailsUiState by viewModel.prizeDetailsUiState.collectAsState()
+            val searchTextState by viewModel.searchTextState.collectAsState()
 
             PrizeDetailsScreen(
                 onActionClick = onActionClick,
                 navigateToEditPrize = { prizeId -> navigateToEditPrize(prizeId) },
                 prizeDetailsUiState = prizeDetailsUiState,
-                onDeletePrize = { prizeId -> viewModel.deletePrize(prizeId) }
+                onDeletePrize = { prizeId -> viewModel.deletePrize(prizeId) },
+                onSortClick = { sortOption ->
+                    if (prizeDetailsUiState.selectedSortOption != sortOption.option) {
+                        viewModel.sortBy(sortOption)
+                    } else {
+                        viewModel.sortBy(sortingType = SortTypes.ByName)
+                    }
+                },
+                onSearchValueChange = { inputValue ->
+                    viewModel.onSearch(inputValue)
+                },
+                onSearchClear = {
+                    viewModel.clearSearchText()
+                },
+                searchText = searchTextState
             )
         }
         composable(route = Route.Home.Prize.PrizeEntry.route) {
