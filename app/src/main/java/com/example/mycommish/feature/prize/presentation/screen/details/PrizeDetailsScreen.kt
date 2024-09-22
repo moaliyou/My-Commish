@@ -20,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
@@ -183,7 +184,7 @@ private fun PrizeList(
         modifier = modifier.padding(contentPadding)
     ) {
         LazyColumn(state = lazyListState) {
-            items(items = prizes, key = { prize -> prize.id }) { prize ->
+            items(items = prizes, key = { prize -> prize.name }) { prize ->
                 PrizeCard(
                     modifier = Modifier
                         .padding(dimensionResource(R.dimen.medium_padding)),
@@ -194,6 +195,13 @@ private fun PrizeList(
                 )
             }
         }
+    }
+
+    SideEffect {
+        lazyListState.requestScrollToItem(
+            index = lazyListState.firstVisibleItemIndex,
+            scrollOffset = lazyListState.firstVisibleItemScrollOffset
+        )
     }
 
 }
