@@ -8,6 +8,9 @@
     <dimen name="extra_medium_padding">16dp</dimen>
     <dimen name="large_padding">32dp</dimen>
     <dimen name="extra_large_padding">64dp</dimen>
+    <dimen name="content_medium_padding">64dp</dimen>
+    <dimen name="content_extra_medium_padding">96dp</dimen>
+    <dimen name="content_large_padding">128dp</dimen>
     <dimen name="onboarding_corner_size">48dp</dimen>
     <dimen name="icon_button_size">56dp</dimen>
 </resources>
