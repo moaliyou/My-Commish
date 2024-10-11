@@ -2,6 +2,7 @@ package com.example.mycommish.feature.prize.presentation.screen.details
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -27,6 +29,7 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
@@ -116,9 +119,7 @@ private fun PrizeDetailsBody(
     onSearchClear: () -> Unit,
     searchText: String = ""
 ) {
-    val prizes = prizeDetailsUiState.prizeList
-
-    if (prizes.isEmpty()) {
+    if (prizeDetailsUiState.prizeList.isEmpty()) {
         NoDataIndicator(
             modifier = Modifier
                 .fillMaxSize()
@@ -127,45 +128,85 @@ private fun PrizeDetailsBody(
             contentPadding = contentPadding
         )
     } else {
-        Column(
-            modifier = modifier
-        ) {
-            MyCommishSearchField(
-                inputValue = searchText,
-                onInputValueChange = onSearchValueChange,
-                placeholder = stringResource(R.string.search_prize_placeholder),
-                trailingIcon = {
-                    if (searchText.isNotEmpty() && searchText.isNotBlank()) {
-                        IconButton(onClick = onSearchClear) {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
-                                contentDescription = "Clear icon",
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
+        ShowPrizeListWithSearchAndFilter(
+            modifier,
+            searchText,
+            onSearchValueChange,
+            onSearchClear,
+            prizeDetailsUiState,
+            onSortClick,
+            contentPadding,
+            onDeleteClick,
+            onEditClick
+        )
+    }
+}
+
+@Composable
+private fun ShowPrizeListWithSearchAndFilter(
+    modifier: Modifier,
+    searchText: String,
+    onSearchValueChange: (String) -> Unit,
+    onSearchClear: () -> Unit,
+    prizeDetailsUiState: PrizeDetailsUiState,
+    onSortClick: (SortTypes) -> Unit,
+    contentPadding: PaddingValues,
+    onDeleteClick: (Long) -> Unit,
+    onEditClick: (Long) -> Unit
+) {
+    val prizes = prizeDetailsUiState.prizeList
+
+    Column(
+        modifier = modifier
+    ) {
+        MyCommishSearchField(
+            inputValue = searchText,
+            onInputValueChange = onSearchValueChange,
+            placeholder = stringResource(R.string.search_prize_placeholder),
+            trailingIcon = {
+                if (searchText.isNotEmpty() && searchText.isNotBlank()) {
+                    IconButton(onClick = onSearchClear) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
+                            contentDescription = "Clear icon",
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                        )
                     }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = dimensionResource(R.dimen.medium_padding))
-            )
-            MyCommishFilterChip(
-                selectedSortOption = prizeDetailsUiState.selectedSortOption,
-                onSortClick = onSortClick,
-                sortingOptions = SortTypes.getSortOptions(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        dimensionResource(R.dimen.medium_padding)
-                    )
-            )
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = dimensionResource(R.dimen.medium_padding))
+        )
+        MyCommishFilterChip(
+            selectedSortOption = prizeDetailsUiState.selectedSortOption,
+            onSortClick = onSortClick,
+            sortingOptions = SortTypes.getSortOptions(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    dimensionResource(R.dimen.medium_padding)
+                )
+        )
+        if (prizeDetailsUiState.isPrizeFound) {
             PrizeList(
                 prizes = prizes,
                 contentPadding = contentPadding,
                 onDeleteClick = onDeleteClick,
                 onEditClick = onEditClick
             )
+        } else {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    text = stringResource(R.string.prize_not_found_string),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
     }
 }
@@ -203,9 +244,7 @@ private fun PrizeList(
             scrollOffset = lazyListState.firstVisibleItemScrollOffset
         )
     }
-
 }
-
 
 @Preview(
     showBackground = true,

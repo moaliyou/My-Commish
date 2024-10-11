@@ -43,10 +43,19 @@ class PrizeDetailsViewModel @Inject constructor(
                         }.toImmutableList()
                     }
 
-                    PrizeDetailsUiState(
-                        prizeList = filteredPrize.ifEmpty { prizeList.toImmutableList() },
-                        selectedSortOption = sortingType
-                    )
+                    if (filteredPrize.isNotEmpty()) {
+                        PrizeDetailsUiState(
+                            prizeList = filteredPrize,
+                            isPrizeFound = true,
+                            selectedSortOption = sortingType
+                        )
+                    } else {
+                        PrizeDetailsUiState(
+                            prizeList = prizeList.toImmutableList(),
+                            isPrizeFound = false,
+                            selectedSortOption = sortingType
+                        )
+                    }
                 }
         }.stateIn(
             scope = viewModelScope,
