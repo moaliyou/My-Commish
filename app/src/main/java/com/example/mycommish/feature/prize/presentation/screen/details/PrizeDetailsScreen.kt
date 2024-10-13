@@ -119,7 +119,9 @@ private fun PrizeDetailsBody(
     onSearchClear: () -> Unit,
     searchText: String = ""
 ) {
-    if (prizeDetailsUiState.prizeList.isEmpty()) {
+    val prizeList = prizeDetailsUiState.prizeList
+
+    if (prizeList.isEmpty()) {
         NoDataIndicator(
             modifier = Modifier
                 .fillMaxSize()
@@ -128,87 +130,88 @@ private fun PrizeDetailsBody(
             contentPadding = contentPadding
         )
     } else {
-        ShowPrizeListWithSearchAndFilter(
-            modifier,
-            searchText,
-            onSearchValueChange,
-            onSearchClear,
-            prizeDetailsUiState,
-            onSortClick,
-            contentPadding,
-            onDeleteClick,
-            onEditClick
+        Column(
+            modifier = modifier
+        ) {
+            SearchFieldWithClearIcon(
+                searchText = searchText,
+                onSearchValueChange = onSearchValueChange,
+                onSearchClear = onSearchClear
+            )
+
+            FilterChipPrize(prizeDetailsUiState, onSortClick)
+
+            if (!prizeDetailsUiState.isPrizeFound) {
+                PrizeNotFoundScreen()
+            } else {
+                PrizeList(
+                    prizes = prizeDetailsUiState.prizeList,
+                    contentPadding = contentPadding,
+                    onDeleteClick = onDeleteClick,
+                    onEditClick = onEditClick
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PrizeNotFoundScreen() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(
+            text = stringResource(R.string.prize_not_found_string),
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 }
 
 @Composable
-private fun ShowPrizeListWithSearchAndFilter(
-    modifier: Modifier,
+private fun FilterChipPrize(
+    prizeDetailsUiState: PrizeDetailsUiState,
+    onSortClick: (SortTypes) -> Unit
+) {
+    MyCommishFilterChip(
+        selectedSortOption = prizeDetailsUiState.selectedSortOption,
+        onSortClick = onSortClick,
+        sortingOptions = SortTypes.getSortOptions(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                dimensionResource(R.dimen.medium_padding)
+            )
+    )
+}
+
+@Composable
+private fun SearchFieldWithClearIcon(
     searchText: String,
     onSearchValueChange: (String) -> Unit,
-    onSearchClear: () -> Unit,
-    prizeDetailsUiState: PrizeDetailsUiState,
-    onSortClick: (SortTypes) -> Unit,
-    contentPadding: PaddingValues,
-    onDeleteClick: (Long) -> Unit,
-    onEditClick: (Long) -> Unit
+    onSearchClear: () -> Unit
 ) {
-    val prizes = prizeDetailsUiState.prizeList
-
-    Column(
-        modifier = modifier
-    ) {
-        MyCommishSearchField(
-            inputValue = searchText,
-            onInputValueChange = onSearchValueChange,
-            placeholder = stringResource(R.string.search_prize_placeholder),
-            trailingIcon = {
-                if (searchText.isNotEmpty() && searchText.isNotBlank()) {
-                    IconButton(onClick = onSearchClear) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
-                            contentDescription = "Clear icon",
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
-                        )
-                    }
+    MyCommishSearchField(
+        inputValue = searchText,
+        onInputValueChange = onSearchValueChange,
+        placeholder = stringResource(R.string.search_prize_placeholder),
+        trailingIcon = {
+            if (searchText.isNotEmpty() && searchText.isNotBlank()) {
+                IconButton(onClick = onSearchClear) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
+                        contentDescription = "Clear icon",
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
                 }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = dimensionResource(R.dimen.medium_padding))
-        )
-        MyCommishFilterChip(
-            selectedSortOption = prizeDetailsUiState.selectedSortOption,
-            onSortClick = onSortClick,
-            sortingOptions = SortTypes.getSortOptions(),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    dimensionResource(R.dimen.medium_padding)
-                )
-        )
-        if (prizeDetailsUiState.isPrizeFound) {
-            PrizeList(
-                prizes = prizes,
-                contentPadding = contentPadding,
-                onDeleteClick = onDeleteClick,
-                onEditClick = onEditClick
-            )
-        } else {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Text(
-                    text = stringResource(R.string.prize_not_found_string),
-                    style = MaterialTheme.typography.bodyLarge
-                )
             }
-        }
-    }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = dimensionResource(R.dimen.medium_padding))
+    )
 }
 
 @Composable
