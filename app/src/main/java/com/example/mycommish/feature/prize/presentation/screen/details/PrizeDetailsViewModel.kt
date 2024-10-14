@@ -39,7 +39,8 @@ class PrizeDetailsViewModel @Inject constructor(
                 .map { prizeList ->
                     val filteredPrize = withContext(Dispatchers.Default) {
                         prizeList.filter { prize ->
-                            prize.name.contains(searchText, ignoreCase = true)
+                            prize.name.contains(searchText, ignoreCase = true) ||
+                                    prize.value.contains(searchText, ignoreCase = true)
                         }.toImmutableList()
                     }
 
