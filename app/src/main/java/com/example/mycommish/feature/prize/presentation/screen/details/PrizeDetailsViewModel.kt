@@ -38,25 +38,21 @@ class PrizeDetailsViewModel @Inject constructor(
             prizeUseCases.getPrizes(sortingType)
                 .map { prizeList ->
                     val filteredPrize = withContext(Dispatchers.Default) {
-                        prizeList.filter { prize ->
-                            prize.name.contains(searchText, ignoreCase = true) ||
-                                    prize.value.contains(searchText, ignoreCase = true)
-                        }.toImmutableList()
+                        if (searchText.isNotBlank()) {
+                            prizeList.filter { prize ->
+                                prize.name.contains(searchText, ignoreCase = true) ||
+                                        prize.value.contains(searchText, ignoreCase = true)
+                            }.toImmutableList()
+                        } else {
+                            prizeList.toImmutableList()
+                        }
                     }
 
-                    if (filteredPrize.isNotEmpty()) {
-                        PrizeDetailsUiState(
-                            prizeList = filteredPrize,
-                            isPrizeFound = true,
-                            selectedSortOption = sortingType
-                        )
-                    } else {
-                        PrizeDetailsUiState(
-                            prizeList = prizeList.toImmutableList(),
-                            isPrizeFound = false,
-                            selectedSortOption = sortingType
-                        )
-                    }
+                    PrizeDetailsUiState(
+                        prizeList = filteredPrize.ifEmpty { prizeList.toImmutableList() },
+                        isPrizeFound = filteredPrize.isNotEmpty(),
+                        selectedSortOption = sortingType
+                    )
                 }
         }.stateIn(
             scope = viewModelScope,
