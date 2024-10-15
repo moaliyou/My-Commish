@@ -8,5 +8,6 @@ import kotlinx.collections.immutable.persistentListOf
 @Stable
 data class PrizeDetailsUiState(
     val prizeList: ImmutableList<Prize> = persistentListOf(),
-    val selectedSortOption: String = ""
+    val selectedSortOption: String = "",
+    val isPrizeFound: Boolean = true
 )

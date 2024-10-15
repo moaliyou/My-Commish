@@ -1,23 +1,23 @@
 [versions]
-agp = "8.6.1"
-kotlin = "1.9.20"
+agp = "8.7.0"
+kotlin = "1.9.24"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
-composeBom = "2024.09.02"
+composeBom = "2024.09.03"
 datastorePreferences = "1.1.1"
 dagger = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 splashscreen = "1.0.1"
-uiTextGoogleFonts = "1.7.2"
+uiTextGoogleFonts = "1.7.3"
 realm = "1.16.0"
 kotlinxCoroutinesCore = "1.8.1"
 kotlinxCollectionsImmutable = "0.3.7"
 room = "2.6.1"
-ksp = "1.9.20-1.0.14"
+ksp = "1.9.24-1.0.20"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

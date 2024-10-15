@@ -2,6 +2,7 @@ package com.example.mycommish.feature.prize.presentation.screen.details
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -27,6 +29,7 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
@@ -116,9 +119,9 @@ private fun PrizeDetailsBody(
     onSearchClear: () -> Unit,
     searchText: String = ""
 ) {
-    val prizes = prizeDetailsUiState.prizeList
+    val prizeList = prizeDetailsUiState.prizeList
 
-    if (prizes.isEmpty()) {
+    if (prizeList.isEmpty()) {
         NoDataIndicator(
             modifier = Modifier
                 .fillMaxSize()
@@ -130,44 +133,85 @@ private fun PrizeDetailsBody(
         Column(
             modifier = modifier
         ) {
-            MyCommishSearchField(
-                inputValue = searchText,
-                onInputValueChange = onSearchValueChange,
-                placeholder = stringResource(R.string.search_prize_placeholder),
-                trailingIcon = {
-                    if (searchText.isNotEmpty() && searchText.isNotBlank()) {
-                        IconButton(onClick = onSearchClear) {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
-                                contentDescription = "Clear icon",
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = dimensionResource(R.dimen.medium_padding))
+            SearchFieldWithClearIcon(
+                searchText = searchText,
+                onSearchValueChange = onSearchValueChange,
+                onSearchClear = onSearchClear
             )
-            MyCommishFilterChip(
-                selectedSortOption = prizeDetailsUiState.selectedSortOption,
-                onSortClick = onSortClick,
-                sortingOptions = SortTypes.getSortOptions(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        dimensionResource(R.dimen.medium_padding)
-                    )
-            )
-            PrizeList(
-                prizes = prizes,
-                contentPadding = contentPadding,
-                onDeleteClick = onDeleteClick,
-                onEditClick = onEditClick
-            )
+
+            FilterChipPrize(prizeDetailsUiState, onSortClick)
+
+            if (!prizeDetailsUiState.isPrizeFound) {
+                PrizeNotFoundScreen()
+            } else {
+                PrizeList(
+                    prizes = prizeDetailsUiState.prizeList,
+                    contentPadding = contentPadding,
+                    onDeleteClick = onDeleteClick,
+                    onEditClick = onEditClick
+                )
+            }
         }
     }
+}
+
+@Composable
+private fun PrizeNotFoundScreen() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(
+            text = stringResource(R.string.prize_not_found_string),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+@Composable
+private fun FilterChipPrize(
+    prizeDetailsUiState: PrizeDetailsUiState,
+    onSortClick: (SortTypes) -> Unit
+) {
+    MyCommishFilterChip(
+        selectedSortOption = prizeDetailsUiState.selectedSortOption,
+        onSortClick = onSortClick,
+        sortingOptions = SortTypes.getSortOptions(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                dimensionResource(R.dimen.medium_padding)
+            )
+    )
+}
+
+@Composable
+private fun SearchFieldWithClearIcon(
+    searchText: String,
+    onSearchValueChange: (String) -> Unit,
+    onSearchClear: () -> Unit
+) {
+    MyCommishSearchField(
+        inputValue = searchText,
+        onInputValueChange = onSearchValueChange,
+        placeholder = stringResource(R.string.search_prize_placeholder),
+        trailingIcon = {
+            if (searchText.isNotEmpty() && searchText.isNotBlank()) {
+                IconButton(onClick = onSearchClear) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
+                        contentDescription = "Clear icon",
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                }
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = dimensionResource(R.dimen.medium_padding))
+    )
 }
 
 @Composable
@@ -203,9 +247,7 @@ private fun PrizeList(
             scrollOffset = lazyListState.firstVisibleItemScrollOffset
         )
     }
-
 }
-
 
 @Preview(
     showBackground = true,
